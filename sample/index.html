@@ -1,0 +1,24 @@
+<html>
+<title>Tagtacular Test</title>
+</html>
+<body>
+<h2>Tagtacular.js Samples Page</h2>
+<h3>Sample #1</h3>
+<div id="tagtacular-1"></div>
+<h3>Sample #2</h3>
+<div id="tagtacular-2"></div>
+<h3>Sample #3</h3>
+<div id="tagtacular-3"></div>
+<div>Some other stuff goes here</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/tagtacular.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
+<script type="text/javascript">
+	$('#tagtacular-1').tagtacular('init', {
+		dataEntityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto']
+	})
+</script>
+</body>
+</html>
