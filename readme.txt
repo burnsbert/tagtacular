@@ -18,6 +18,8 @@ limitations under the License.
 See online documentation for complete instructions. Requires jquery.js and jqueryui.js.
 ===================================================
 
+Go here to see it in action: http://gototech.com/tagtacular/sample/
+
 Tagtacular.js is an open source tag management library released under the Mozilla Public License, Version 2.0. The goals of this project are:
 
 * very easy to setup with default behavior
