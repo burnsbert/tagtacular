@@ -3,21 +3,27 @@
 </html>
 <body>
 <h2>Tagtacular.js Samples Page</h2>
-<h3>Sample #1</h3>
+<h3>Sample Unstyled</h3>
 <div id="tagtacular_1"></div>
-<h3>Sample #2</h3>
-<div id="tagtacular-2"></div>
-<h3>Sample #3</h3>
-<div id="tagtacular-3"></div>
-<div>TODO: add a bunch of samples and styling</div>
+<h3>Sample Basic Style</h3>
+<div class="tagtacular_basic" id="tagtacular_2"></div>
+<br /><br />
+<div>TODO: add a bunch more samples and styling</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../js/tagtacular.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
+<link href="../css/tagtacular.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		dataEntityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston']
+		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		configTagSeperator: ',&nbsp;'
+	})
+
+	var tags2 = $('#tagtacular_2').tagtacular({
+		dataEntityTags: ['Alpha', 'Beta', 'Epsilon'],
+		dataSystemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Phi']
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular

@@ -1,1 +1,29 @@
 
+div.tagtacular_basic .tagtacular_edit_tray {
+	margin: 4px 4px 4px 4px;
+	padding: 4px 4px 4px 4px;
+}
+
+div.tagtacular_basic .tagtacular_tag_tray {
+	margin: 4px 4px 4px 4px;
+	padding: 6px 6px 6px 6px;
+}
+
+div.tagtacular_basic .tagtacular_tag {
+	background-color: #99ffbb;
+	color: #005500;
+	margin: 4px 4px 4px 4px;
+	padding: 4px 4px 4px 4px;
+	border: 1px solid #005500;
+}
+
+div.tagtacular_basic .tagtacular_tag a{
+	color: black;
+	text-decoration: none;
+}
+
+div.tagtacular_basic .tagtacular_tag a:hover{
+	color: red;
+	text-decoration: none;
+}
+

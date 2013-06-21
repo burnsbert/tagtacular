@@ -337,7 +337,7 @@
 			configStartingMode: 'edit',
 			configSwitchButtonTextInEdit: 'Done',
 			configSwitchButtonTextInView: 'Edit',
-			configTagSeperator: ',&nbsp;',
+			configTagSeperator: '',
 			dataEntityTags: [],
 			dataSystemTags: [],
 			commitAddTag: doNothing,
