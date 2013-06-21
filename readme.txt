@@ -1,7 +1,7 @@
 ===================================================
 tagtacular.js v0.5.1
 A jQuery library for tags management.
-http://gototech.com/tagtacular
+http://gototech.com/tagtacular/sample/
 ===================================================
 Copyright 2013 Eric W. Burns
 
