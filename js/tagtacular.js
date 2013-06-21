@@ -22,7 +22,7 @@
 
 (function($){
 
-	$.fn.tagtacular = function(command, modifier) {
+	$.fn.tagtacular = function(options) {
 
 		var toplevel = this;
 		var entityTags = [];
@@ -41,6 +41,10 @@
 			if (result === true) {
 				if (!entityHasTag(tag)) {
 					entityTags.push(tag);
+					if (!tagInList(tag, allTags)) {
+						allTags.push(tag);
+						allTags = settings.sort(allTags);
+					}
 					if (settings.configSortTags) {
 						entityTags = settings.sort(entityTags);
 					}
@@ -60,8 +64,10 @@
 	 	var drawEditTray = function() {
 	 		if (mode == 'edit') {
 	 			settings.drawEditTrayEdit();
+	 			settings.postDrawEditTrayEdit();
 	 		} else if (mode == 'view') {
 	 			settings.drawEditTrayView();
+	 			settings.postDrawEditTrayView();
 	 		}	 		
 	 	}
 
@@ -70,8 +76,10 @@
 
 	 		if (mode == 'edit') {
 	 			settings.drawTagListEdit();
+	 			settings.postDrawTagListEdit();
 	 		} else if (mode == 'view') {
 	 			settings.drawTagListView();
+	 			settings.postDrawTagListView();
 	 		}
 	 	}
 
@@ -79,13 +87,17 @@
 			return tagInList(tag, entityTags);
 		}
 
-		var getAutocompleteTags = function(tag) {
+		var getAutocompleteTags = function() {
 			if (settings.configAutocompletePrune) {
-				var diff = $.grep(allTags,function(val) {return $.inArray(val, entityTags) < 0});
-				return diff;
+				return getRemainingTags();
 			} else {
 				return allTags;
 			}
+		}
+
+		var getRemainingTags = function() {
+			var diff = $.grep(allTags,function(val) {return $.inArray(val, entityTags) < 0});
+			return diff;
 		}
 
 		var removeTag = function(tag) {
@@ -341,32 +353,36 @@
 			messageAddTagSuccess: 'tag added',
 			messageAddTagAlreadyExists: 'tag is already assigned',
 			messageRemoveTagSuccess: 'tag removed',
+			postDrawEditTrayEdit: doNothing,
+			postDrawEditTrayView: doNothing,
+			postDrawTagListEdit: doNothing,
+			postDrawTagListView: doNothing,
 			selectOption: defaultSelectOption,
 			sort: caseInsensitiveSort,
 			validate: defaultValidate,
 		};
 
-		if (command == 'init') {
-			modifier = modifier || {};
-			$.each(modifier, function(key, value) {
+		var tagtacular = function(options) {
+			options = options || {};
+			$.each(options, function(key, value) {
 				settings[key] = value;
 			});
 
 			entityTags = sortList(settings.dataEntityTags);
-			allTags = sortList($.unique(settings.dataSystemTags.concat(entityTags)));
+			allTags = settings.sort($.unique(settings.dataSystemTags.concat(entityTags)));
 			mode = settings.configStartingMode;
 
 			settings.drawLayout();
-		} else if (command == 'addTag') {
-			if ($.type(modifier) === 'string') {
-				addTag(modifier);
-			}
-		} else if (command == 'removeTag') {
-			if ($.type(modifier) === 'string') {
-				removeTag(modifier);
-			}
+			return toplevel;
 		}
 
+		$.extend(toplevel, {'tagtacular': tagtacular});
+		$.extend(toplevel, {'addTag': addTag});
+		$.extend(toplevel, {'removeTag': removeTag});
+		$.extend(toplevel, {'getSystemTags': function() { return allTags; } });
+		$.extend(toplevel, {'getEntityTags': function() { return entityTags; }});
+		$.extend(toplevel, {'getRemainingTags': getRemainingTags});
+		return tagtacular(options);
 	}
 
 })(jQuery);

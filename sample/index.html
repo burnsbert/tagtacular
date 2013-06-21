@@ -15,10 +15,19 @@
 <script type="text/javascript" src="../js/tagtacular.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
 <script type="text/javascript">
-	$('#tagtacular_1').tagtacular('init', {
+	var tags1 = $('#tagtacular_1').tagtacular({
 		dataEntityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto']
+		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston']
 	})
+
+	// Here's how to use the hooks to manipulate an instance of tagtacular
+	// tags1.addTag('Detroit');
+	// tags1.removeTag('Chicago');
+
+	// console.log(tags1.getEntityTags());
+	// console.log(tags1.getSystemTags());
+	// console.log(tags1.getRemainingTags());
+
 </script>
 </body>
 </html>
