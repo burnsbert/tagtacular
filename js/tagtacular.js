@@ -1,7 +1,10 @@
 /* ===================================================
- * tagtacular.js v0.5.2
+ * tagtacular.js v0.5.3
  * A jQuery library for tags management.
- * http://gototech.com/tagtacular/sample/
+ *
+ * GitHub Repo: https://github.com/burnsbert/tagtacular
+ * Samples: http://gototech.com/tagtacular/sample/
+ * Documentation: https://github.com/burnsbert/tagtacular/wiki
  * ===================================================
  * Copyright 2013 Eric W. Burns
  *
@@ -48,7 +51,7 @@
 					if (settings.configSortTags) {
 						entityTags = settings.sort(entityTags);
 					}
-					settings.commitAddTag(tag);
+					settings.commitAddTag(tag, settings.entityId);
 					drawTagList();
 					drawEditTray();
 					settings.messageAddTagSuccess && settings.flashSuccess(settings.messageAddTagSuccess, 'addTag', tag);
@@ -73,10 +76,10 @@
 		var drawEditTrayForEditMode = function() {
 			var html = '<input class="tagtacular_add_input" value="'+rememberTag+'" />';
 			if (settings.configShowAddButton) {
-				html += '<button class="tagtacular_add_button">'+settings.configAddButtonText+'</button>'
+				html += settings.getAddButtonHtml(settings);
 			}
 			if (settings.configShowSwitchButton) {
-				html += '<button class="tagtacular_switch_button">'+settings.configSwitchButtonTextInEdit+'</button>'
+				html += settings.getSwitchButtonHtml(mode, settings);
 			}
 			toplevel.find('.tagtacular_edit_tray').html(html);
 			if (settings.configShowAddButton) {
@@ -123,7 +126,7 @@
 		var drawEditTrayForViewMode = function() {
 			var html = '';
 			if (settings.configShowSwitchButton && settings.configAllowedToEdit) {
-				html += '<button class="tagtacular_switch_button">'+settings.configSwitchButtonTextInView+'</button>'
+				html += settings.getSwitchButtonHtml(mode, settings);
 			}
 			toplevel.find('.tagtacular_edit_tray').html(html);
 
@@ -182,8 +185,9 @@
 			$.each(entityTags, function(key, value) {
 				tags.push(settings.getTagHtml(value, mode, settings));
 			});
-			var html = tags.join(settings.configTagSeparator);
+			var html = tags.join('');
 			toplevel.find('.tagtacular_tag_tray').html(html);
+			toplevel.find('.tagtacular_tag_tray .tagtacular_tag').last().find('.tagtacular_delim').remove();
 		}
 
 		var entityHasTag = function(tag) {
@@ -211,7 +215,7 @@
 					return value != tag;
 				}
 			});
-			settings.commitRemoveTag(tag);
+			settings.commitRemoveTag(tag, settings.entityId);
 	 		drawTagList();
 	 		drawEditTray();
 			settings.messageRemoveTagSuccess && settings.flashSuccess(settings.messageRemoveTagSuccess, 'removeTag', tag);	 		
@@ -244,10 +248,26 @@
 		/// Default Functions ///
 		////////////////////////
 
+		// default
 		var caseInsensitiveSort = function(list) {
 			list.sort(function(a,b) {
-				a = a.toLowerCase();
-				b = b.toLowerCase();
+				var a = a.toLowerCase();
+				var b = b.toLowerCase();
+				if (a == b) {
+					return 0;
+				}
+				if (a > b) {
+					return 1;
+				}
+				return -1;
+			});
+
+			return list;	
+		}
+
+		// example
+		var caseSensitiveSort = function(list) {
+			list.sort(function(a,b) {
 				if (a == b) {
 					 return 0;
 				}
@@ -272,15 +292,24 @@
 			alert(message);
 		}
 
+		var defaultGetAddButtonHtml = function(settings) {
+			return '<button class="tagtacular_add_button">'+settings.configAddButtonText+'</button>';;
+		}
+
 		var defaultGetLayoutHtml = function() {
 			return '<div class="tagtacular_tag_tray"></div><div class="tagtacular_edit_tray"></div>';
+		}
+
+		var defaultGetSwitchButtonHtml = function(mode, settings) {
+			var label = (mode == 'view') ? settings.configSwitchButtonTextInView : settings.configSwitchButtonTextInEdit;
+			return '<button class="tagtacular_switch_button">'+label+'</button>';
 		}
 
 		var defaultGetTagHtml = function(tag, mode, settings) {
 			if (mode=='edit') {
 				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span>&nbsp;<a class="tagtacular_delete" href="#">'+settings.configDeleteSymbol+'</a><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			} else if (mode=='view') {
-				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span></span>';
+				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			}
 		}
 
@@ -304,6 +333,7 @@
 			return param;
 		}
 
+		// example
 		var stricterValidate = function(tag) {
 			if (tag.length < settings.configMinimumTagLength) {
 				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
@@ -330,7 +360,6 @@
 			configAddOnSwitch:             true,
 			configAddButtonText:           'Add',
 			configAllowedToEdit:           true,
-			configAllowedToDefineNewTag:   true,
 			configAutocomplete:            true,
 			configAutocompletePrune:       true,
 			configCaseInsensitive:         true,
@@ -347,7 +376,10 @@
 			configTagSeparator:            '',
 			dataEntityTags:                [],
 			dataSystemTags:                [],
+			entityId:                      null,
+			getAddButtonHtml:              defaultGetAddButtonHtml, 
 			getLayoutHtml:                 defaultGetLayoutHtml,
+			getSwitchButtonHtml:           defaultGetSwitchButtonHtml, 
 			getTagHtml:                    defaultGetTagHtml,
 			flashFailure:                  defaultFlashFailure,
 			flashWarning:                  defaultFlashWarning,
@@ -373,6 +405,8 @@
 			mode = settings.configStartingMode;
 
 			drawLayout();
+
+			console.log(settings);
 			return toplevel;
 		}
 
