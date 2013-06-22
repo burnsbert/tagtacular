@@ -182,7 +182,7 @@
 			$.each(entityTags, function(key, value) {
 				tags.push(settings.getTagHtml(value, mode, settings));
 			});
-			var html = tags.join(settings.configTagSeperator);
+			var html = tags.join(settings.configTagSeparator);
 			toplevel.find('.tagtacular_tag_tray').html(html);
 		}
 
@@ -278,7 +278,7 @@
 
 		var defaultGetTagHtml = function(tag, mode, settings) {
 			if (mode=='edit') {
-				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span>&nbsp;<a class="tagtacular_delete" href="#">'+settings.configDeleteSymbol+'</a><span class="tagtacular_delim">'+settings.configTagSeperator+'</span></span>';
+				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span>&nbsp;<a class="tagtacular_delete" href="#">'+settings.configDeleteSymbol+'</a><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			} else if (mode=='view') {
 				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span></span>';
 			}
@@ -325,41 +325,41 @@
 		/////////////////////////////////
 
 		var settings = {
-			configAddOnSwitch: true,
-			configAddButtonText: 'Add',
-			configAllowedToEdit: true,
-			configAllowedToDefineNewTag: true,
-			configAutocomplete: true,
-			configAutocompletePrune: true,
-			configCaseInsensitive: true,
-			configDeleteSymbol: 'X',
-			configDelimiters: [13,44],
-			configMinimumTagLength: 1,
-			configMaximumTagLength: 32,
-			configShowAddButton: true,
-			configShowSwitchButton: true,
-			configSortTags: true,
-			configStartingMode: 'edit',
-			configSwitchButtonTextInEdit: 'Done',
-			configSwitchButtonTextInView: 'Edit',
-			configTagSeperator: '',
-			dataEntityTags: [],
-			dataSystemTags: [],
-			commitAddTag: doNothing,
-			commitRemoveTag: doNothing,
-			getLayoutHtml: defaultGetLayoutHtml,
-			getTagHtml: defaultGetTagHtml,
-			flashFailure: defaultFlashFailure,
-			flashWarning: defaultFlashWarning,
-			flashSuccess: doNothing,
-			messageAddTagSuccess: 'tag added',
-			messageAddTagAlreadyExists: 'tag is already assigned',
-			messageRemoveTagSuccess: 'tag removed',
-			postDrawEditTray: doNothing,
-			postDrawTagList: doNothing,
-			postSwitchLayout: doNothing,
-			sort: caseInsensitiveSort,
-			validate: defaultValidate,
+			commitAddTag:                  doNothing,
+			commitRemoveTag:               doNothing,
+			configAddOnSwitch:             true,
+			configAddButtonText:           'Add',
+			configAllowedToEdit:           true,
+			configAllowedToDefineNewTag:   true,
+			configAutocomplete:            true,
+			configAutocompletePrune:       true,
+			configCaseInsensitive:         true,
+			configDeleteSymbol:            'X',
+			configDelimiters:              [13,44],
+			configMinimumTagLength:        1,
+			configMaximumTagLength:        32,
+			configShowAddButton:           true,
+			configShowSwitchButton:        true,
+			configSortTags:                true,
+			configStartingMode:            'edit',
+			configSwitchButtonTextInEdit:  'Done',
+			configSwitchButtonTextInView:  'Edit',
+			configTagSeparator:            '',
+			dataEntityTags:                [],
+			dataSystemTags:                [],
+			getLayoutHtml:                 defaultGetLayoutHtml,
+			getTagHtml:                    defaultGetTagHtml,
+			flashFailure:                  defaultFlashFailure,
+			flashWarning:                  defaultFlashWarning,
+			flashSuccess:                  doNothing,
+			messageAddTagSuccess:          'tag added',
+			messageAddTagAlreadyExists:    'tag is already assigned',
+			messageRemoveTagSuccess:       'tag removed',
+			postDrawEditTray:              doNothing,
+			postDrawTagList:               doNothing,
+			postSwitchLayout:              doNothing,
+			sort:                          caseInsensitiveSort,
+			validate:                      defaultValidate,
 		};
 
 		var tagtacular = function(options) {
