@@ -103,11 +103,18 @@
 				});
 			}
 
+			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keydown', function(e) {
+				var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
+				if ($.inArray(e.which, settings.configDeleteLastOnEmptyKeys) != -1 && tagText.length < 1) {
+					e.preventDefault();
+					removeTag(entityTags[entityTags.length - 1]);
+				}
+			});
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keypress', function(e) {
 				if ($.inArray(e.which, settings.configDelimiters) != -1) {
 					e.preventDefault();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
-					addTag(tagText);					
+					addTag(tagText);
 				}
 			});
 
@@ -364,6 +371,7 @@
 			configAutocompletePrune:       true,
 			configCaseInsensitive:         true,
 			configDeleteSymbol:            'X',
+			configDeleteLastOnEmptyKeys:   [],
 			configDelimiters:              [13,44],
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
@@ -405,8 +413,6 @@
 			mode = settings.configStartingMode;
 
 			drawLayout();
-
-			console.log(settings);
 			return toplevel;
 		}
 
