@@ -3,7 +3,7 @@
  * A jQuery library for tags management.
  *
  * GitHub Repo: https://github.com/burnsbert/tagtacular
- * Samples: http://gototech.com/tagtacular/sample/
+ * Examples: http://gototech.com/tagtacular/sample/
  * Documentation: https://github.com/burnsbert/tagtacular/wiki
  * ===================================================
  * Copyright 2013 Eric W. Burns
