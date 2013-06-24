@@ -16,14 +16,16 @@
 <link href="../css/tagtacular.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
-		dataEntityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		dataSystemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
-		configTagSeparator: ',&nbsp;'
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		configTagSeparator: ',&nbsp;',
+		entityId: 101
 	})
 
 	var tags2 = $('#tagtacular_2').tagtacular({
-		dataEntityTags: ['Alpha', 'Beta', 'Epsilon'],
-		dataSystemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Phi']
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Phi'],
+		entityId: 102
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular
@@ -33,6 +35,8 @@
 	// console.log(tags1.getEntityTags());
 	// console.log(tags1.getSystemTags());
 	// console.log(tags1.getRemainingTags());
+	// console.log(tags1.getState());
+	// console.log(tags1.getEntityId());
 
 </script>
 </body>

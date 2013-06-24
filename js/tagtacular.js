@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.5.3
+ * tagtacular.js v0.5.4
  * A jQuery library for tags management.
  *
  * GitHub Repo: https://github.com/burnsbert/tagtacular
@@ -31,7 +31,6 @@
 		var entityTags = [];
 		var allTags = [];
 		var mode = 'edit';
-		var ready = false;
 		var rememberTag = '';
 
 		///////////////////////
@@ -378,13 +377,11 @@
 			configShowAddButton:           true,
 			configShowSwitchButton:        true,
 			configSortTags:                true,
-			configStartingMode:            'edit',
 			configSwitchButtonTextInEdit:  'Done',
 			configSwitchButtonTextInView:  'Edit',
 			configTagSeparator:            '',
-			dataEntityTags:                [],
-			dataSystemTags:                [],
 			entityId:                      null,
+			entityTags:                    [],
 			getAddButtonHtml:              defaultGetAddButtonHtml, 
 			getLayoutHtml:                 defaultGetLayoutHtml,
 			getSwitchButtonHtml:           defaultGetSwitchButtonHtml, 
@@ -395,33 +392,47 @@
 			messageAddTagSuccess:          'tag added',
 			messageAddTagAlreadyExists:    'tag is already assigned',
 			messageRemoveTagSuccess:       'tag removed',
+			mode:                          'edit',
 			postDrawEditTray:              doNothing,
 			postDrawTagList:               doNothing,
 			postSwitchLayout:              doNothing,
 			sort:                          caseInsensitiveSort,
+			systemTags:                    [],
 			validate:                      defaultValidate,
 		};
 
+		// initialization function
 		var tagtacular = function(options) {
 			options = options || {};
 			$.each(options, function(key, value) {
 				settings[key] = value;
 			});
 
-			entityTags = sortList(settings.dataEntityTags);
-			allTags = settings.sort($.unique(settings.dataSystemTags.concat(entityTags)));
-			mode = settings.configStartingMode;
+			entityTags = sortList(settings.entityTags);
+			allTags = settings.sort($.unique(settings.systemTags.concat(entityTags)));
+			mode = settings.mode;
 
 			drawLayout();
 			return toplevel;
 		}
 
-		$.extend(toplevel, {'tagtacular': tagtacular});
 		$.extend(toplevel, {'addTag': addTag});
-		$.extend(toplevel, {'removeTag': removeTag});
-		$.extend(toplevel, {'getSystemTags': function() { return allTags; } });
+		$.extend(toplevel, {'getEntityId': function() {
+			return settings.entityId;
+		}});
 		$.extend(toplevel, {'getEntityTags': function() { return entityTags; }});
 		$.extend(toplevel, {'getRemainingTags': getRemainingTags});
+		$.extend(toplevel, {'getState': function() {
+			var state = $.extend({}, settings);
+			state.entityTags = entityTags;
+			state.systemTags = allTags;
+			state.mode = mode;
+			return state;
+		}});
+		$.extend(toplevel, {'getSystemTags': function() { return allTags; } });
+		$.extend(toplevel, {'removeTag': removeTag});
+		$.extend(toplevel, {'tagtacular': tagtacular});
+
 		return tagtacular(options);
 	}
 
