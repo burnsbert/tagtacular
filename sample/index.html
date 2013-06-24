@@ -7,6 +7,8 @@
 <div id="tagtacular_1"></div>
 <h3>Sample Basic Style</h3>
 <div class="tagtacular_basic" id="tagtacular_2"></div>
+<h3>Limit User to Existing Tags</h3>
+<div class="tagtacular_basic" id="tagtacular_3"></div>
 <br /><br />
 <div>TODO: add a bunch more samples and styling</div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
@@ -19,13 +21,23 @@
 		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
 		configTagSeparator: ',&nbsp;',
-		entityId: 101
+		entityId: 101,
+		configShowAddButton: false,
+		configDelimiters: []
 	})
 
 	var tags2 = $('#tagtacular_2').tagtacular({
 		entityTags: ['Alpha', 'Beta', 'Epsilon'],
 		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Phi'],
 		entityId: 102
+	})
+
+	var tags3 = $('#tagtacular_3').tagtacular({
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		entityId: 103,
+		configShowAddButton: false,
+		configDelimiters: []
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular
