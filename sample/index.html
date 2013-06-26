@@ -2,40 +2,79 @@
 <title>Tagtacular Test</title>
 </html>
 <body>
-<h2>Tagtacular.js Samples Page</h2>
-<h3>Sample Unstyled</h3>
-<div id="tagtacular_1"></div>
-<h3>Sample Basic Style</h3>
-<div class="tagtacular_basic" id="tagtacular_2"></div>
-<h3>Limit User to Existing Tags</h3>
-<div class="tagtacular_basic" id="tagtacular_3"></div>
-<br /><br />
-<div>TODO: add a bunch more samples and styling</div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../js/tagtacular.js"></script>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="../css/tagtacular.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript">
+<h2>Tagtacular.js Examples Page</h2>
+<h3>Example 1: Textlike</h3>
+<div class="tagtacular_textlike" id="tagtacular_1"></div>
+<div class="codebox">
+<pre>
 	var tags1 = $('#tagtacular_1').tagtacular({
+		entityId: 101,
 		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
 		configTagSeparator: ',&nbsp;',
-		entityId: 101,
+		configShowAddButton: false,
+		configShowSwitchButton: false,
+		configDeleteLastOnEmptyKeys: [8],
+		configSortTags: false
+	})	
+</pre>
+</div>
+<h3>Example 2: Keep it Simple</h3>
+<div class="tagtacular_basic" id="tagtacular_2"></div>
+<div class="codebox">
+<pre>
+	var tags2 = $('#tagtacular_2').tagtacular({
+		entityId: 102,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston']
+	})
+</pre>
+</div>
+<h3>Example 3: Limit to Existing Tags</h3>
+<div class="tagtacular_basic" id="tagtacular_3"></div>
+<div class="codebox">
+<pre>
+	var tags3 = $('#tagtacular_3').tagtacular({
+		entityId: 103,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
 		configShowAddButton: false,
 		configDelimiters: []
 	})
+</pre>
+</div>
+<br /><br />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../js/tagtacular.js?donotcache=20130625"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
+<link href="../css/tagtacular.css?donotcache=20130625" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+	var tags1 = $('#tagtacular_1').tagtacular({
+		entityId: 101,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		configTagSeparator: ',&nbsp;',
+		configShowAddButton: false,
+		configShowSwitchButton: false,
+		configDeleteLastOnEmptyKeys: [8],
+		configSortTags: false
+	})
 
 	var tags2 = $('#tagtacular_2').tagtacular({
-		entityTags: ['Alpha', 'Beta', 'Epsilon'],
-		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Phi'],
-		entityId: 102
+		entityId: 102,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston']
 	})
 
 	var tags3 = $('#tagtacular_3').tagtacular({
-		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
 		entityId: 103,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
 		configShowAddButton: false,
 		configDelimiters: []
 	})

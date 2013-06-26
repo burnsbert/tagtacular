@@ -1,3 +1,29 @@
+/* Textlike Style */
+
+div.tagtacular_textlike {
+	margin: 4px 4px 4px 4px;
+}
+
+div.tagtacular_textlike .tagtacular_tag_tray {
+	margin-right: 10px;
+	float: left;
+	padding-top: 5px;
+	font-size: 1.1em;
+}
+
+div.tagtacular_textlike .tagtacular_edit_tray input {
+	margin: 2px 2px 2px 2px;
+	padding: 4px 4px 4px 4px;	
+}
+
+div.tagtacular_textlike a.tagtacular_delete{
+	font-family: "Arial", Arial, Verdana;
+	text-decoration: none;
+	color: #d00;
+	font-size: 0.8em;
+}
+
+/* Basic Style */
 
 div.tagtacular_basic .tagtacular_edit_tray {
 	margin: 4px 4px 4px 4px;
@@ -7,13 +33,14 @@ div.tagtacular_basic .tagtacular_edit_tray {
 div.tagtacular_basic .tagtacular_tag_tray {
 	margin: 4px 4px 4px 4px;
 	padding: 6px 6px 6px 6px;
+	font-size: 1.1em;
 }
 
 div.tagtacular_basic .tagtacular_tag {
 	background-color: #99ffbb;
 	color: #005500;
 	margin: 4px 8px 4px 0px;
-	padding: 4px 4px 4px 4px;
+	padding: 4px 6px 4px 6px;
 	border: 1px solid #005500;
 }
 
@@ -22,8 +49,13 @@ div.tagtacular_basic .tagtacular_tag a{
 	text-decoration: none;
 }
 
-div.tagtacular_basic .tagtacular_tag a:hover{
-	color: red;
+div.tagtacular_basic a.tagtacular_delete{
+	font-family: "Arial", Arial, Verdana;
 	text-decoration: none;
+	color: black;
+	font-size: 0.8em;
 }
 
+div.tagtacular_basic a.tagtacular_delete:hover{
+	color: red;
+}
