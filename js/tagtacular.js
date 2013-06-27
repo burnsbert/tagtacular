@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.5.4
+ * tagtacular.js v0.5.5
  * A jQuery library for tags management.
  *
  * http://gototech.com/tagtacular
@@ -37,7 +37,7 @@
 
 		var addTag = function(tag) {
 			tag = $.trim(tag);
-			var result = settings.validate(tag);
+			var result = settings.validate(tag, settings);
 			if (result === true) {
 				if (!entityHasTag(tag)) {
 					entityTags.push(tag);
@@ -111,14 +111,17 @@
 				if ($.inArray(e.which, settings.configDelimiters) != -1) {
 					e.preventDefault();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
-					addTag(tagText);
+					if (tagText.length > 0) {
+						addTag(tagText);
+					}
 				}
 			});
 
 			if (settings.configAutocomplete) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
 					source: getAutocompleteTags(),
-					select: function( event, ui ) {
+					select: function(e, ui) {
+						toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val('');
 						addTag(ui.item.value);
 					}
 				});
@@ -209,6 +212,15 @@
 		var getRemainingTags = function() {
 			var diff = $.grep(allTags,function(val) {return $.inArray(val, entityTags) < 0});
 			return diff;
+		}
+
+		var getState = function() {
+			var state = $.extend({}, settings);
+			state.entityTags = entityTags;
+			state.systemTags = allTags;
+			state.mode = mode;
+			state.toplevel = toplevel;
+			return state;
 		}
 
 		var removeTag = function(tag) {
@@ -317,7 +329,7 @@
 			}
 		}
 
-		var defaultValidate = function(tag) {
+		var defaultValidate = function(tag, settings) {
 			if (tag.length < settings.configMinimumTagLength) {
 				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
 			}
@@ -338,7 +350,7 @@
 		}
 
 		// example
-		var stricterValidate = function(tag) {
+		var stricterValidate = function(tag, settings) {
 			if (tag.length < settings.configMinimumTagLength) {
 				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
 			}
@@ -420,13 +432,7 @@
 		}});
 		$.extend(toplevel, {'getEntityTags': function() { return entityTags; }});
 		$.extend(toplevel, {'getRemainingTags': getRemainingTags});
-		$.extend(toplevel, {'getState': function() {
-			var state = $.extend({}, settings);
-			state.entityTags = entityTags;
-			state.systemTags = allTags;
-			state.mode = mode;
-			return state;
-		}});
+		$.extend(toplevel, {'getState': getState});
 		$.extend(toplevel, {'getSystemTags': function() { return allTags; } });
 		$.extend(toplevel, {'removeTag': removeTag});
 		$.extend(toplevel, {'tagtacular': tagtacular});

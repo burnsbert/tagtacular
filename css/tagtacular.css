@@ -67,3 +67,12 @@ div.tagtacular_basic a.tagtacular_delete:hover{
 div.tagtacular_basic button {
 	margin-left: 8px;
 }
+
+/* Basic Style Blue */
+
+div.tagtacular_basic.blue .tagtacular_tag{
+	background-color: #c0d0ff;
+	color: #000055;
+	border: 1px solid #000055;
+}
+

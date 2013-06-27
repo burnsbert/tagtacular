@@ -1,5 +1,5 @@
 <html>
-<title>Tags Management with tagtacular.js</title>
+<title>Tag Management with tagtacular.js</title>
 </html>
 <body>
 <img alt="tagtacular.js" src="images/tagtacular_70.png" /><br/>
@@ -67,12 +67,48 @@ Similar to the last example, but always in edit mode (no mode switch button). No
 	})
 </pre>
 </div>
+<h3>Example 4: Custom Validator and Commit Functions</h3>
+<p>
+Using the tagtacular_basic.blue style. Here we're passing in some callbacks to change validation behavior and to run code to commit changes to the backend (simulated by alerts).
+</p>
+<div class="tagtacular_basic blue" id="tagtacular_4"></div>
+<div class="codebox">
+<pre>
+	var tags4 = $('#tagtacular_4').tagtacular({
+		entityId: 104,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		configMinimumTagLength: 2,
+		configMaximumTagLength: 24,
+		validate: function(tag, settings) {
+			if (tag.length &lt; settings.configMinimumTagLength) {
+				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
+			}
+			if (tag.length &gt; settings.configMaximumTagLength) {
+				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
+			}
+			var pattern = /^[0-9A-Za-z\.]+$/;
+			if (!pattern.test(tag)) {
+				return 'illegal characters: tag names can only include letters, numbers, and periods';
+			}
+
+			return true;
+		},
+		commitAddTag: function(tag, entityId) {
+			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
+		},
+		commitRemoveTag: function(tag, entityId) {
+			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
+		}
+	})
+</pre>
+</div>
 <br /><br />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/tagtacular.js?donotcache=20130625"></script>
+<script type="text/javascript" src="js/tagtacular.js?donotcache=20130626"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="css/tagtacular.css?donotcache=20130625" rel="stylesheet" type="text/css" />
+<link href="css/tagtacular.css?donotcache=20130626" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		entityId: 101,
@@ -99,6 +135,34 @@ Similar to the last example, but always in edit mode (no mode switch button). No
 		             'Chi', 'Psi', 'Omega'],
 		configShowAddButton: false,
 		configDelimiters: []
+	})
+
+	var tags4 = $('#tagtacular_4').tagtacular({
+		entityId: 104,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto', 'Boston'],
+		configMinimumTagLength: 2,
+		configMaximumTagLength: 24,
+		validate: function(tag, settings) {
+			if (tag.length < settings.configMinimumTagLength) {
+				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
+			}
+			if (tag.length > settings.configMaximumTagLength) {
+				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
+			}
+			var pattern = /^[0-9A-Za-z\.]+$/;
+			if (!pattern.test(tag)) {
+				return 'illegal characters: tag names can only include letters, numbers, and periods';
+			}
+
+			return true;
+		},
+		commitAddTag: function(tag, entityId) {
+			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
+		},
+		commitRemoveTag: function(tag, entityId) {
+			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
+		}
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular
