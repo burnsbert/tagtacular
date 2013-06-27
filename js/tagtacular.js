@@ -50,7 +50,7 @@
 					}
 					settings.commitAddTag(tag, settings.entityId);
 					drawTagList();
-					drawEditTray();
+					drawEditTray(true);
 					settings.messageAddTagSuccess && settings.flashSuccess(settings.messageAddTagSuccess, 'addTag', tag);
 				} else {
 					settings.messageAddTagAlreadyExists && settings.flashWarning(settings.messageAddTagAlreadyExists, 'addTag', tag);
@@ -61,16 +61,16 @@
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
 		}
 
-	 	var drawEditTray = function() {
+	 	var drawEditTray = function(focus) {
 	 		if (mode == 'edit') {
-	 			drawEditTrayForEditMode();
+	 			drawEditTrayForEditMode(focus);
 	 		} else if (mode == 'view') {
 	 			drawEditTrayForViewMode();
 	 		}	 		
 	 		settings.postDrawEditTray(mode);
 	 	}
 
-		var drawEditTrayForEditMode = function() {
+		var drawEditTrayForEditMode = function(focus) {
 			var html = '<input class="tagtacular_add_input" value="'+rememberTag+'" />';
 			if (settings.configShowAddButton) {
 				html += settings.getAddButtonHtml(settings);
@@ -95,7 +95,7 @@
 					rememberTag = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 					mode = 'view';
 					drawTagList();
-					drawEditTray();
+					drawEditTray(true);
 					settings.postSwitchLayout(mode);
 				});
 			}
@@ -127,7 +127,9 @@
 				});
 			}
 
-			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
+			if (focus) {
+				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
+			}
 		}
 
 		var drawEditTrayForViewMode = function() {
@@ -141,7 +143,7 @@
 				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function() {
 					mode = 'edit';
 					drawTagList();
-					drawEditTray();
+					drawEditTray(true);
 					rememberTag = '';
 					settings.postSwitchLayout(mode);
 				});
@@ -154,7 +156,7 @@
 			}
 			toplevel.html(settings.getLayoutHtml());
 			drawTagList();
-			drawEditTray();
+			drawEditTray(false);
 		}
 
 	 	var drawTagList = function() {
@@ -233,7 +235,7 @@
 			});
 			settings.commitRemoveTag(tag, settings.entityId);
 	 		drawTagList();
-	 		drawEditTray();
+	 		drawEditTray(true);
 			settings.messageRemoveTagSuccess && settings.flashSuccess(settings.messageRemoveTagSuccess, 'removeTag', tag);	 		
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
 	 	}
