@@ -1,9 +1,25 @@
 <html>
-<title>Tagtacular Test</title>
+<title>Tags Management with tagtacular.js</title>
 </html>
 <body>
-<h2>Tagtacular.js Examples Page</h2>
+<img alt="tagtacular.js" src="images/tagtacular_70.png" /><br/>
+<h2>About Tagtacular</h2>
+Tagtacular is an open source jQuery plugin by Eric Burns for managing tags. It is released under the Mozilla Public License, Version 2.0. The goals of this project are:
+<ul>
+<li>very easy to setup with default behavior</li>
+<li>very flexible customization options</li>
+<li>minimal requirements and minimal assumptions about your technology stack and architecture</li>
+</ul>
+
+<a href="https://github.com/burnsbert/tagtacular">Download from GitHub</a><br />
+<a href="https://github.com/burnsbert/tagtacular/wiki">Complete Documentation</a><br />
+
+<h2>Examples and Demo</h2>
+
 <h3>Example 1: Textlike</h3>
+<p>
+This is styled very simply. Enter or comma after typing a tag name adds it. Backspace deletes the last tag. Always in edit mode.
+</p>
 <div class="tagtacular_textlike" id="tagtacular_1"></div>
 <div class="codebox">
 <pre>
@@ -20,6 +36,9 @@
 </pre>
 </div>
 <h3>Example 2: Keep it Simple</h3>
+<p>
+Using the tagtaculsr_basic style and the default configuration. Edit and view modes, starting in edit, with Add and Switch Mode buttons. Enter or comma add a new tag, as does the Add button.
+</p>
 <div class="tagtacular_basic" id="tagtacular_2"></div>
 <div class="codebox">
 <pre>
@@ -31,6 +50,9 @@
 </pre>
 </div>
 <h3>Example 3: Limit to Existing Tags</h3>
+<p>
+Similar to the last example, but always in edit mode (no mode switch button). No add button or add delimiters, so we restrict the user to adding from a predefined list of tags.
+</p>
 <div class="tagtacular_basic" id="tagtacular_3"></div>
 <div class="codebox">
 <pre>
@@ -48,9 +70,9 @@
 <br /><br />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="../js/tagtacular.js?donotcache=20130625"></script>
+<script type="text/javascript" src="js/tagtacular.js?donotcache=20130625"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="../css/tagtacular.css?donotcache=20130625" rel="stylesheet" type="text/css" />
+<link href="css/tagtacular.css?donotcache=20130625" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		entityId: 101,
