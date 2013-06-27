@@ -396,7 +396,7 @@
 			postSwitchLayout:              doNothing,
 			sort:                          caseInsensitiveSort,
 			systemTags:                    [],
-			validate:                      defaultValidate,
+			validate:                      defaultValidate
 		};
 
 		// initialization function

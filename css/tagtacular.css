@@ -63,3 +63,7 @@ div.tagtacular_basic a.tagtacular_delete{
 div.tagtacular_basic a.tagtacular_delete:hover{
 	color: red;
 }
+
+div.tagtacular_basic button {
+	margin-left: 8px;
+}
