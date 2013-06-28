@@ -2,6 +2,14 @@ h1, h2, h3, strong {
 	font-family: "Arial", Arial, Verdana;
 }
 
+html {
+	margin: 20px 20px 20px 20px;
+}
+
+div.main {
+	padding-left: 20px;
+}
+
 /* Textlike Style */
 
 div.tagtacular_textlike {
@@ -34,6 +42,10 @@ div.tagtacular_basic .tagtacular_edit_tray {
 	padding: 4px 4px 4px 4px;
 }
 
+div.tagtacular_basic .tagtacular_edit_tray input {
+	margin-right: 8px;
+}
+
 div.tagtacular_basic .tagtacular_tag_tray {
 	margin: 4px 4px 4px 4px;
 	padding: 6px 6px 6px 6px;
@@ -41,14 +53,11 @@ div.tagtacular_basic .tagtacular_tag_tray {
 }
 
 div.tagtacular_basic .tagtacular_tag {
-	background-color: #99ffbb;
-	color: #005500;
 	margin: 4px 8px 4px 0px;
 	padding: 4px 6px 4px 6px;
-	border: 1px solid #005500;
 }
 
-div.tagtacular_basic .tagtacular_tag a{
+div.tagtacular_basic .tagtacular_tag a.tagtacular_delete{
 	color: black;
 	text-decoration: none;
 }
@@ -65,14 +74,76 @@ div.tagtacular_basic a.tagtacular_delete:hover{
 }
 
 div.tagtacular_basic button {
-	margin-left: 8px;
+	margin-right: 8px;
+	margin-left: 0px;
+}
+
+div.tagtacular_basic .tagtacular_tag {
+	border: 1px solid #005500;
+	background-color: #99ffbb;
+	color: #005500;
+}
+
+div.tagtacular_basic .tagtacular_tag a span.tagtacular_value {
+	background-color: #99ffbb;
+	color: #005500;
+}
+
+div.tagtacular_basic .tagtacular_tag a:hover span.tagtacular_value {
+	color: red;
 }
 
 /* Basic Style Blue */
 
-div.tagtacular_basic.blue .tagtacular_tag{
+div.tagtacular_basic.blue .tagtacular_tag {
 	background-color: #c0d0ff;
 	color: #000055;
 	border: 1px solid #000055;
 }
 
+div.tagtacular_basic.blue .tagtacular_tag a span.tagtacular_value {
+	background-color: #c0d0ff;
+	color: #000055;
+}
+
+div.tagtacular_basic.blue .tagtacular_tag a:hover span.tagtacular_value {
+	color: red;
+}
+
+/* Basic Style Red */
+
+div.tagtacular_basic.red .tagtacular_tag{
+	background-color: #ffc0c0;
+	color: #550000;
+	border: 1px solid #550000;
+}
+
+div.tagtacular_basic.red .tagtacular_tag a span.tagtacular_value {
+	background-color: #ffc0c0;
+	color: #550000;
+}
+
+div.tagtacular_basic.red .tagtacular_tag a:hover span.tagtacular_value {
+	color: blue;
+}
+
+div.tagtacular_basic.red a.tagtacular_delete:hover{
+	color: blue;
+}
+
+/* Basic Style Yellow */
+
+div.tagtacular_basic.yellow .tagtacular_tag {
+	background-color: #ffffd0;
+	color: #444400;
+	border: 1px solid #444400;
+}
+
+div.tagtacular_basic.yellow .tagtacular_tag a span.tagtacular_value {
+	background-color: #ffffd0;
+	color: #444400;
+}
+
+div.tagtacular_basic.yellow .tagtacular_tag a:hover span.tagtacular_value {
+	color: red;
+}
