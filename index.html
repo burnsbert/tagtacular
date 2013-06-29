@@ -3,7 +3,7 @@
 <title>Tag Management with tagtacular.js</title>
 <meta name="description" content="Tagtacular is an open source jQuery plugin for managing tags." />
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="css/tagtacular.css?donotcache=20130627" rel="stylesheet" type="text/css" />
+<link href="css/tagtacular.css?donotcache=20130628" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="top">
@@ -75,7 +75,7 @@ Similar to the last example, but always in edit mode (no mode switch button). No
 </div>
 <h3>Example 4: Custom Validator and Commit Functions</h3>
 <p>
-Using the tagtacular_basic.blue style. Here we're passing in some callbacks to change validation behavior and to run code to commit changes to the backend (simulated by alerts).
+Using the tagtacular_basic.blue style. Here we're passing in some callbacks to change validation behavior and to run code to commit changes to the backend (simulated by alerts). This instance is also configured to start in view mode.
 </p>
 <div class="tagtacular_basic blue" id="tagtacular_4"></div>
 <div class="codebox">
@@ -105,21 +105,22 @@ Using the tagtacular_basic.blue style. Here we're passing in some callbacks to c
 		},
 		commitRemoveTag: function(tag, entityId) {
 			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
-		}
+		},
+		mode: 'view'
 	})
 </pre>
 </div>
 <h3>Example 5: Custom Tags</h3>
 <p>
-Using getTagHtml setting to define custom tag html. Here we make each tag a link to a Wikipedia search. You could apply this general method to make each tag link to a search that returned all entities with that tag in your web app.
+Using getTagHtml setting to define custom tag html. Here we make each tag a link to a Wikipedia search. You could apply this general method to make each tag link to a search that returned all entities with that tag in your web app. We're also applying a filter on the tag names themselves using formatTagName and configFormatTagNamesOnInit. The first letter of each word is capitalized and the rest is converted to lower case.
 </p>
 <div class="tagtacular_basic yellow" id="tagtacular_5"></div>
 <div class="codebox">
 <pre>
 	var tags5 = $('#tagtacular_5').tagtacular({
 		entityId: 105,
-		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
+		entityTags: ['boston', 'chicago', 'new york city', 'atlanta'],
+		systemTags: ['austin', 'dallas', 'raleigh', 'richmond', 'augusta', 'portland', 'durham', 'memphis', 'nashville', 'seattle', 'toronto'],
 		getTagHtml: function(tag, mode, settings) {
 			var encodedTag = tag.replace(' ', '+');
 			encodedTag = encodedTag.replace('-', '+');
@@ -135,14 +136,23 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 				return '&lt;span class="tagtacular_tag"&gt;&lt;a href="'+url+'" target="_blank" &gt;&lt;span class="tagtacular_value"&gt;'+tag+
 				'&lt;/span&gt;&lt;/a&gt;&lt;span class="tagtacular_delim"&gt;'+settings.configTagSeparator+'&lt;/span&gt;&lt;/span&gt;';
 			}
-		}
+		},
+		formatTagName: function(tag) {
+			// capitalize first letter of each word and make the rest lower case
+			tag = tag.toLowerCase();
+			return tag.replace(/(^([a-zA-Z\p{M}]))|([ -_][a-zA-Z\p{M}])/g,
+				function($1){
+					return $1.toUpperCase();
+				});
+		},
+		configFormatTagNamesOnInit: true		
 	});
 </pre>
 </div>
 </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/tagtacular.js?donotcache=20130627"></script>
+<script type="text/javascript" src="js/tagtacular.js?donotcache=20130628"></script>
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		entityId: 101,
@@ -196,13 +206,14 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 		},
 		commitRemoveTag: function(tag, entityId) {
 			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
-		}
+		},
+		mode: 'view'
 	});
 
 	var tags5 = $('#tagtacular_5').tagtacular({
 		entityId: 105,
-		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
+		entityTags: ['boston', 'chicago', 'new york city', 'atlanta'],
+		systemTags: ['austin', 'dallas', 'raleigh', 'richmond', 'augusta', 'portland', 'durham', 'memphis', 'nashville', 'seattle', 'toronto'],
 		getTagHtml: function(tag, mode, settings) {
 			var encodedTag = tag.replace(' ', '+');
 			encodedTag = encodedTag.replace('-', '+');
@@ -215,7 +226,16 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 			} else if (mode=='view') {
 				return '<span class="tagtacular_tag"><a href="'+url+'" target="_blank" ><span class="tagtacular_value">'+tag+'</span></a><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			}
-		}
+		},
+		formatTagName: function(tag) {
+			// capitalize first letter of each word and make the rest lower case
+			tag = tag.toLowerCase();
+			return tag.replace(/(^([a-zA-Z\p{M}]))|([ -_][a-zA-Z\p{M}])/g,
+				function($1){
+					return $1.toUpperCase();
+				});
+		},
+		configFormatTagNamesOnInit: true
 	});
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular

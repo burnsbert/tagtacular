@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.5.5
+ * tagtacular.js v0.6.0
  * A jQuery library for tags management.
  *
  * http://gototech.com/tagtacular
@@ -37,7 +37,7 @@
 		/////////////////////
 
 		var addTag = function(tag) {
-			tag = $.trim(tag);
+			tag = settings.formatTagName($.trim(tag));
 			var result = settings.validate(tag, settings);
 			if (result === true) {
 				if (!entityHasTag(tag)) {
@@ -385,6 +385,7 @@
 			configDeleteSymbol:            'X',
 			configDeleteLastOnEmptyKeys:   [],
 			configDelimiters:              [13,44],
+			configFormatTagNamesOnInit:    false,
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
 			configShowAddButton:           true,
@@ -402,6 +403,7 @@
 			flashFailure:                  defaultFlashFailure,
 			flashWarning:                  defaultFlashWarning,
 			flashSuccess:                  doNothing,
+			formatTagName:                 doNothing,
 			messageAddTagSuccess:          'tag added',
 			messageAddTagAlreadyExists:    'tag is already assigned',
 			messageRemoveTagSuccess:       'tag removed',
@@ -423,6 +425,16 @@
 
 			entityTags = sortList(settings.entityTags);
 			allTags = settings.sort($.unique(settings.systemTags.concat(entityTags)));
+
+			if (settings.configFormatTagNamesOnInit) {
+				entityTags = $.map(entityTags, function(value, index) {
+					return settings.formatTagName(value);
+				});
+				allTags = $.map(allTags, function(value, index) {
+					return settings.formatTagName(value);
+				});
+			}
+
 			mode = settings.mode;
 
 			drawLayout();
