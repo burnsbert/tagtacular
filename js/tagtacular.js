@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.7.0
+ * tagtacular.js v0.7.1
  * A jQuery library for tags management.
  *
  * http://gototech.com/tagtacular
@@ -29,6 +29,7 @@
 		var allTags = [];
 		var mode = 'edit';
 		var rememberTag = '';
+		var flashCount = 0;
 
 		///////////////////////
 		/// Core Functions ///
@@ -47,15 +48,15 @@
 					if (settings.configSortTags) {
 						entityTags = settings.sort(entityTags);
 					}
-					settings.commitAddTag(tag, settings.entityId);
+					settings.commitAddTag(tag, settings.entityId, settings);
 					drawTagList();
 					drawEditTray(true);
-					settings.messageAddTagSuccess && settings.flashSuccess(settings.messageAddTagSuccess, 'addTag', tag);
+					settings.messageAddTagSuccess && settings.flashSuccess(settings.messageAddTagSuccess);
 				} else {
-					settings.messageAddTagAlreadyExists && settings.flashWarning(settings.messageAddTagAlreadyExists, 'addTag', tag);
+					settings.messageAddTagAlreadyExists && settings.flashFailure(settings.messageAddTagAlreadyExists);
 				}
 			} else {
-				result && settings.flashFailure(result, 'addTag', tag);
+				result && settings.flashFailure(result);
 			}
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
 		}
@@ -77,7 +78,9 @@
 			if (settings.configShowSwitchButton) {
 				html += settings.getSwitchButtonHtml(mode, settings);
 			}
-			html += '<span style="display: none;" class="tagtacular_flash"></span>';
+			if (settings.configRenderFlashMessageSpan) {
+				html += '<span style="display: none;" class="tagtacular_flash"></span>';
+			}
 			toplevel.find('.tagtacular_edit_tray').html(html);
 			if (settings.configShowAddButton) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function() {
@@ -140,6 +143,10 @@
 			if (settings.configShowSwitchButton && settings.configAllowedToEdit) {
 				html += settings.getSwitchButtonHtml(mode, settings);
 			}
+			if (settings.configRenderFlashMessageSpan) {
+				html += '<span style="display: none;" class="tagtacular_flash"></span>';
+			}
+
 			toplevel.find('.tagtacular_edit_tray').html(html);
 
 			if (settings.configShowSwitchButton && settings.configAllowedToEdit) {
@@ -189,7 +196,6 @@
 				tag.remove()
 				removeTag(tagText);
 			});
-
 		}
 
 		var drawTagListForViewMode = function() {
@@ -236,7 +242,7 @@
 					return value != tag;
 				}
 			});
-			settings.commitRemoveTag(tag, settings.entityId);
+			settings.commitRemoveTag(tag, settings.entityId, settings);
 	 		drawTagList();
 	 		drawEditTray(true);
 			settings.messageRemoveTagSuccess && settings.flashSuccess(settings.messageRemoveTagSuccess, 'removeTag', tag);	 		
@@ -302,18 +308,44 @@
 		}
 
 		var defaultFlashFailure = function(message) {
-			toplevel.find('.tagtacular_flash').html(message);
-			toplevel.find('.tagtacular_flash').show();
-		}
+			var flash = toplevel.find('.tagtacular_flash');
+			flash.html(message);
+			flash.addClass('tagtacular_failure');
+			flash.removeClass('tagtacular_success');
+			flash.show();
 
-		var defaultFlashWarning = function(message) {
-			toplevel.find('.tagtacular_flash').html(message);
-			toplevel.find('.tagtacular_flash').show();
+			// if the are several messages in a row, the last one should get its full allotment of time
+			var expected = ++flashCount;
+
+			if (settings.configFlashFailureHideAfter) {
+				setTimeout(function() {
+					if (flashCount == expected) {
+						var flash = toplevel.find('.tagtacular_flash');
+						flash.fadeOut();
+					}
+				}, 1000 * settings.configFlashFailureHideAfter);
+			}
 		}
 
 		var defaultFlashSuccess = function(message) {
-			toplevel.find('.tagtacular_flash').html(message);
-			toplevel.find('.tagtacular_flash').show();
+			var flash = toplevel.find('.tagtacular_flash')
+			flash.html(message);
+			flash.addClass('tagtacular_success');
+			flash.removeClass('tagtacular_failure');
+			flash.show();
+
+			// if the are several messages in a row, the last one should get its full allotment of time
+			var expected = ++flashCount;
+
+			if (settings.configFlashSuccessHideAfter) {
+				setTimeout(function() {
+					if (flashCount == expected) {
+						var flash = toplevel.find('.tagtacular_flash');
+						flash.fadeOut();
+					}
+				}, 1000 * settings.configFlashSuccessHideAfter);
+
+			}
 		}
 
 		var defaultGetAddButtonHtml = function(settings) {
@@ -373,9 +405,12 @@
 			configDeleteSymbol:            'X',
 			configDeleteLastOnEmptyKeys:   [],
 			configDelimiters:              [13,44],
+			configFlashFailureHideAfter:   5,
+			configFlashSuccessHideAfter:   5,
 			configFormatTagNamesOnInit:    false,
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
+			configRenderFlashMessageSpan:  true, //new
 			configShowAddButton:           true,
 			configShowSwitchButton:        true,
 			configSortTags:                true,
@@ -388,16 +423,15 @@
 			getLayoutHtml:                 defaultGetLayoutHtml,
 			getSwitchButtonHtml:           defaultGetSwitchButtonHtml, 
 			getTagHtml:                    defaultGetTagHtml,
-			flashFailure:                  defaultFlashFailure, //changed
-			flashWarning:                  defaultFlashWarning, //changed
-			flashSuccess:                  defaultFlashSuccess, //changed
+			flashFailure:                  defaultFlashFailure,
+			flashSuccess:                  defaultFlashSuccess,
 			formatTagName:                 doNothing,
 			messageAddTagSuccess:          'tag added',
 			messageAddTagAlreadyExists:    'tag is already assigned',
 			messageRemoveTagSuccess:       'tag removed',
-			messageTagNameInvalid:         'invalid tag name: tag names can only include letters, numbers, underscores, hyphens, and spaces', //new
-			messageTagTooLong:             'tag name too long, maximum length of [configMaximumTagLength]', //new
-			messageTagTooShort:            'tag name too short, minimum length of [configMinimumTagLength]', //new
+			messageTagNameInvalid:         'invalid tag name: tag names can only include letters, numbers, underscores, hyphens, and spaces',
+			messageTagTooLong:             'tag name too long, maximum length of [configMaximumTagLength]',
+			messageTagTooShort:            'tag name too short, minimum length of [configMinimumTagLength]',
 			mode:                          'edit',
 			postDrawEditTray:              doNothing,
 			postDrawTagList:               doNothing,
@@ -405,7 +439,7 @@
 			sort:                          caseInsensitiveSort,
 			systemTags:                    [],
 			validate:                      defaultValidate,
-			validationPattern:             /^[0-9A-Za-z_\- ]+$/ //new
+			validationPattern:             /^[0-9A-Za-z_\- ]+$/
 		};
 
 		// initialization function
@@ -437,6 +471,8 @@
 		}
 
 		$.extend(toplevel, {'addTag': addTag});
+		$.extend(toplevel, {'flashFailure': settings.flashFailure}); // new
+		$.extend(toplevel, {'flashSuccess': settings.flashSuccess}); // new
 		$.extend(toplevel, {'getEntityId': function() {
 			return settings.entityId;
 		}});

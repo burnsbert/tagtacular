@@ -85,7 +85,7 @@ Similar to the last example, but always in edit mode (no mode switch button). No
 </div>
 <h3>Example 4: Custom Validator and Commit Functions</h3>
 <p>
-Using the tagtacular_basic.blue style. Here we change validation behavior and run code to commit changes to the backend (simulated by alerts). This instance is also configured to start in view mode.
+Using the tagtacular_basic.blue style. Here we change validation behavior and run code to commit changes to the backend (simulated by sending a success message two seconds later). This instance is also configured to start in view mode. This is also a good example of how you can call any callback defined in your settings object from any other callback that gets a settings object.
 </p>
 <div class="tagtacular_basic blue" id="tagtacular_4"></div>
 <div class="codebox">
@@ -98,11 +98,15 @@ Using the tagtacular_basic.blue style. Here we change validation behavior and ru
 		configMaximumTagLength: 24,
 		validationPattern: /^[0-9A-Za-z\.]+$/,
 		messageTagNameInvalid: 'illegal characters: tag names can only include letters, numbers, and periods',
-		commitAddTag: function(tag, entityId) {
-			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
+		commitAddTag: function(tag, entityId, settings) {
+			setTimeout(function() {
+				settings.flashSuccess('saved add of ' + tag + ' to entity #' + entityId);
+			}, 2000);
 		},
-		commitRemoveTag: function(tag, entityId) {
-			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
+		commitRemoveTag: function(tag, entityId, settings) {
+			setTimeout(function() {
+				settings.flashSuccess('saved remove of ' + tag + ' from entity #' + entityId);
+			}, 2000);
 		},
 		mode: 'view'
 	})
@@ -187,11 +191,15 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 		configMaximumTagLength: 24,
 		validationPattern: /^[0-9A-Za-z\.]+$/,
 		messageTagNameInvalid: 'illegal characters: tag names can only include letters, numbers, and periods',
-		commitAddTag: function(tag, entityId) {
-			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
+		commitAddTag: function(tag, entityId, settings) {
+			setTimeout(function() {
+				settings.flashSuccess('saved add of ' + tag + ' to entity #' + entityId);
+			}, 2000);
 		},
-		commitRemoveTag: function(tag, entityId) {
-			alert('todo: write a function to tell the backend that we removed ' + tag + ' from entity #' + entityId);
+		commitRemoveTag: function(tag, entityId, settings) {
+			setTimeout(function() {
+				settings.flashSuccess('saved remove of ' + tag + ' from entity #' + entityId);
+			}, 2000);
 		},
 		mode: 'view'
 	});

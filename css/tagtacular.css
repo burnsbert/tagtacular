@@ -35,6 +35,19 @@ div.tagtacular_textlike a.tagtacular_delete{
 	font-size: 0.8em;
 }
 
+div.tagtacular_textlike .tagtacular_flash{
+	color: #606060;
+	margin-left: 8px;
+}
+
+div.tagtacular_textlike .tagtacular_flash.tagtacular_failure{
+	color: #c00000;
+}
+
+div.tagtacular_textlike .tagtacular_flash.tagtacular_success{
+	color: #008000;
+}
+
 /* Basic Style */
 
 div.tagtacular_basic .tagtacular_edit_tray {
@@ -76,6 +89,19 @@ div.tagtacular_basic a.tagtacular_delete:hover{
 div.tagtacular_basic button {
 	margin-right: 8px;
 	margin-left: 0px;
+}
+
+div.tagtacular_basic .tagtacular_flash{
+	color: #606060;
+	margin-left: 8px;
+}
+
+div.tagtacular_basic .tagtacular_flash.tagtacular_failure{
+	color: #c00000;
+}
+
+div.tagtacular_basic .tagtacular_flash.tagtacular_success{
+	color: #008000;
 }
 
 div.tagtacular_basic .tagtacular_tag {
