@@ -292,21 +292,6 @@
 			return list;	
 		}
 
-		// example
-		var caseSensitiveSort = function(list) {
-			list.sort(function(a,b) {
-				if (a == b) {
-					 return 0;
-				}
-				if (a > b) {
-					return 1;
-				}
-				return -1;
-			});
-
-			return list;	
-		}
-
 		var defaultFlashFailure = function(message) {
 			var flash = toplevel.find('.tagtacular_flash');
 			flash.html(message);
