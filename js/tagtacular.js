@@ -299,7 +299,6 @@
 		/// Default Functions ///
 		////////////////////////
 
-		// default
 		var caseInsensitiveSort = function(list) {
 			list.sort(function(a,b) {
 				var a = a.toLowerCase();
@@ -427,7 +426,7 @@
 			configFormatTagNamesOnInit:    false,
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
-			configRenderFlashMessageSpan:  true, //new
+			configRenderFlashMessageSpan:  true,
 			configShowAddButton:           true,
 			configShowSwitchButton:        true,
 			configSortTags:                true,
@@ -488,8 +487,8 @@
 		}
 
 		$.extend(toplevel, {'addTag': addTag});
-		$.extend(toplevel, {'flashFailure': settings.flashFailure}); // new
-		$.extend(toplevel, {'flashSuccess': settings.flashSuccess}); // new
+		$.extend(toplevel, {'flashFailure': settings.flashFailure});
+		$.extend(toplevel, {'flashSuccess': settings.flashSuccess});
 		$.extend(toplevel, {'getEntityId': function() {
 			return settings.entityId;
 		}});
