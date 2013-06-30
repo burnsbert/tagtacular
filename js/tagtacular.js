@@ -70,6 +70,7 @@
 	 			drawEditTrayForViewMode();
 	 		}
 
+	 		// if we're redrawing the edit tray, re-fire the current flash message if there is one
 	 		if (currentSuccessMessage.length > 0) {
 	 			settings.flashSuccess(currentSuccessMessage);
 	 		}
@@ -81,8 +82,9 @@
 	 	}
 
 		var drawEditTrayForEditMode = function(focus, initialText) {
-			initialText = rememberTag || initialText || '';
+			initialText =  initialText || rememberTag || '';
 
+			// Draw the DOM Elements
 			var html = '<input class="tagtacular_add_input" value="'+initialText+'" />';
 			if (settings.configShowAddButton) {
 				html += settings.getAddButtonHtml(settings);
@@ -94,6 +96,8 @@
 				html += '<span style="display: none;" class="tagtacular_flash"></span>';
 			}
 			toplevel.find('.tagtacular_edit_tray').html(html);
+
+			// Add Button Bindings
 			if (settings.configShowAddButton) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function() {
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
@@ -101,6 +105,7 @@
 				});
 			}
 
+			// Switch Button Bindings
 			if (settings.configShowSwitchButton) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function() {
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
@@ -115,6 +120,7 @@
 				});
 			}
 
+			// Add Tag Input Bindings
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keydown', function(e) {
 				var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 				if ($.inArray(e.which, settings.configDeleteLastOnEmptyKeys) != -1 && tagText.length < 1) {
@@ -123,7 +129,6 @@
 					removeTag(entityTags[entityTags.length - 1]);
 				}
 			});
-
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keypress', function(e) {
 				if ($.inArray(e.which, settings.configDelimiters) != -1) {
 					e.preventDefault();
@@ -135,6 +140,7 @@
 				}
 			});
 
+			// Autocomplete Bindings
 			if (settings.configAutocomplete) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
 					source: getAutocompleteTags(),
