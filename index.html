@@ -85,7 +85,7 @@ Similar to the last example, but always in edit mode (no mode switch button). No
 </div>
 <h3>Example 4: Custom Validator and Commit Functions</h3>
 <p>
-Using the tagtacular_basic.blue style. Here we're passing in some callbacks to change validation behavior and to run code to commit changes to the backend (simulated by alerts). This instance is also configured to start in view mode.
+Using the tagtacular_basic.blue style. Here we change validation behavior and run code to commit changes to the backend (simulated by alerts). This instance is also configured to start in view mode.
 </p>
 <div class="tagtacular_basic blue" id="tagtacular_4"></div>
 <div class="codebox">
@@ -96,20 +96,8 @@ Using the tagtacular_basic.blue style. Here we're passing in some callbacks to c
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
 		configMinimumTagLength: 2,
 		configMaximumTagLength: 24,
-		validate: function(tag, settings) {
-			if (tag.length &lt; settings.configMinimumTagLength) {
-				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
-			}
-			if (tag.length &gt; settings.configMaximumTagLength) {
-				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
-			}
-			var pattern = /^[0-9A-Za-z\.]+$/;
-			if (!pattern.test(tag)) {
-				return 'illegal characters: tag names can only include letters, numbers, and periods';
-			}
-
-			return true;
-		},
+		validationPattern: /^[0-9A-Za-z\.]+$/,
+		messageTagNameInvalid: 'illegal characters: tag names can only include letters, numbers, and periods',
 		commitAddTag: function(tag, entityId) {
 			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
 		},
@@ -178,7 +166,7 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 	var tags2 = $('#tagtacular_2').tagtacular({
 		entityId: 102,
 		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
-		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto']
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
 	});
 
 	var tags3 = $('#tagtacular_3').tagtacular({
@@ -197,20 +185,8 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
 		configMinimumTagLength: 2,
 		configMaximumTagLength: 24,
-		validate: function(tag, settings) {
-			if (tag.length < settings.configMinimumTagLength) {
-				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
-			}
-			if (tag.length > settings.configMaximumTagLength) {
-				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
-			}
-			var pattern = /^[0-9A-Za-z\.]+$/;
-			if (!pattern.test(tag)) {
-				return 'illegal characters: tag names can only include letters, numbers, and periods';
-			}
-
-			return true;
-		},
+		validationPattern: /^[0-9A-Za-z\.]+$/,
+		messageTagNameInvalid: 'illegal characters: tag names can only include letters, numbers, and periods',
 		commitAddTag: function(tag, entityId) {
 			alert('todo: write a function to tell the backend that we added ' + tag + ' to entity #' + entityId);
 		},

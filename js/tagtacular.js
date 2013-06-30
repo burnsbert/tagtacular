@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.6.0
+ * tagtacular.js v0.7.0
  * A jQuery library for tags management.
  *
  * http://gototech.com/tagtacular
@@ -20,9 +20,7 @@
  * See online documentation for complete instructions. Requires jquery.js and jqueryui.js.
  * =================================================== */
 
-"use strict";
-
-(function($){
+;(function($){
 
 	$.fn.tagtacular = function(options) {
 
@@ -79,6 +77,7 @@
 			if (settings.configShowSwitchButton) {
 				html += settings.getSwitchButtonHtml(mode, settings);
 			}
+			html += '<span style="display: none;" class="tagtacular_flash"></span>';
 			toplevel.find('.tagtacular_edit_tray').html(html);
 			if (settings.configShowAddButton) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function() {
@@ -105,12 +104,15 @@
 				var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 				if ($.inArray(e.which, settings.configDeleteLastOnEmptyKeys) != -1 && tagText.length < 1) {
 					e.preventDefault();
+					e.stopPropagation();
 					removeTag(entityTags[entityTags.length - 1]);
 				}
 			});
+
 			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keypress', function(e) {
 				if ($.inArray(e.which, settings.configDelimiters) != -1) {
 					e.preventDefault();
+					e.stopPropagation();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 					if (tagText.length > 0) {
 						addTag(tagText);
@@ -300,15 +302,18 @@
 		}
 
 		var defaultFlashFailure = function(message) {
-			alert(message);
+			toplevel.find('.tagtacular_flash').html(message);
+			toplevel.find('.tagtacular_flash').show();
 		}
 
 		var defaultFlashWarning = function(message) {
-			alert(message);
+			toplevel.find('.tagtacular_flash').html(message);
+			toplevel.find('.tagtacular_flash').show();
 		}
 
 		var defaultFlashSuccess = function(message) {
-			alert(message);
+			toplevel.find('.tagtacular_flash').html(message);
+			toplevel.find('.tagtacular_flash').show();
 		}
 
 		var defaultGetAddButtonHtml = function(settings) {
@@ -334,14 +339,14 @@
 
 		var defaultValidate = function(tag, settings) {
 			if (tag.length < settings.configMinimumTagLength) {
-				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
+				return settings.messageTagTooShort;
 			}
 			if (tag.length > settings.configMaximumTagLength) {
-				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
+				return settings.messageTagTooLong;
 			}
-			var pattern = /^[0-9A-Za-z_\- ]+$/;
+			var pattern = settings.validationPattern;
 			if (!pattern.test(tag)) {
-				return 'illegal characters: tag names can only include letters, numbers, underscores, hyphens, and spaces';
+				return settings.messageTagNameInvalid;
 			}
 
 			return true;
@@ -350,23 +355,6 @@
 		var doNothing = function(param) {
 			// do nothing
 			return param;
-		}
-
-		// example
-		var stricterValidate = function(tag, settings) {
-			if (tag.length < settings.configMinimumTagLength) {
-				return 'tag too short: minimum length is ' + settings.configMinimumTagLength;
-			}
-			if (tag.length > settings.configMaximumTagLength) {
-				return 'tag too long: maximum length is ' + settings.configMaximumTagLength;
-			}
-
-			var pattern = /^[0-9A-Za-z_\-]+$/;
-			if (!pattern.test(tag)) {
-				return 'illegal characters: tag names can only include letters, numbers, underscores, and hyphens';
-			}
-
-			return true;
 		}
 
 		///////////////////////////////////
@@ -400,20 +388,24 @@
 			getLayoutHtml:                 defaultGetLayoutHtml,
 			getSwitchButtonHtml:           defaultGetSwitchButtonHtml, 
 			getTagHtml:                    defaultGetTagHtml,
-			flashFailure:                  defaultFlashFailure,
-			flashWarning:                  defaultFlashWarning,
-			flashSuccess:                  doNothing,
+			flashFailure:                  defaultFlashFailure, //changed
+			flashWarning:                  defaultFlashWarning, //changed
+			flashSuccess:                  defaultFlashSuccess, //changed
 			formatTagName:                 doNothing,
 			messageAddTagSuccess:          'tag added',
 			messageAddTagAlreadyExists:    'tag is already assigned',
 			messageRemoveTagSuccess:       'tag removed',
+			messageTagNameInvalid:         'invalid tag name: tag names can only include letters, numbers, underscores, hyphens, and spaces', //new
+			messageTagTooLong:             'tag name too long, maximum length of [configMaximumTagLength]', //new
+			messageTagTooShort:            'tag name too short, minimum length of [configMinimumTagLength]', //new
 			mode:                          'edit',
 			postDrawEditTray:              doNothing,
 			postDrawTagList:               doNothing,
 			postSwitchLayout:              doNothing,
 			sort:                          caseInsensitiveSort,
 			systemTags:                    [],
-			validate:                      defaultValidate
+			validate:                      defaultValidate,
+			validationPattern:             /^[0-9A-Za-z_\- ]+$/ //new
 		};
 
 		// initialization function
@@ -422,6 +414,9 @@
 			$.each(options, function(key, value) {
 				settings[key] = value;
 			});
+
+			settings.messageTagTooLong = settings.messageTagTooLong.replace('[configMaximumTagLength]', settings.configMaximumTagLength);
+			settings.messageTagTooShort = settings.messageTagTooShort.replace('[configMinimumTagLength]', settings.configMinimumTagLength);
 
 			entityTags = sortList(settings.entityTags);
 			allTags = settings.sort($.unique(settings.systemTags.concat(entityTags)));
@@ -445,10 +440,14 @@
 		$.extend(toplevel, {'getEntityId': function() {
 			return settings.entityId;
 		}});
-		$.extend(toplevel, {'getEntityTags': function() { return entityTags; }});
+		$.extend(toplevel, {'getEntityTags': function() { 
+			return entityTags; 
+		}});
 		$.extend(toplevel, {'getRemainingTags': getRemainingTags});
 		$.extend(toplevel, {'getState': getState});
-		$.extend(toplevel, {'getSystemTags': function() { return allTags; } });
+		$.extend(toplevel, {'getSystemTags': function() { 
+			return allTags; 
+		}});
 		$.extend(toplevel, {'removeTag': removeTag});
 		$.extend(toplevel, {'tagtacular': tagtacular});
 
