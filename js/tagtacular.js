@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.7.1
+ * tagtacular.js v0.7.2
  * A jQuery library for tags management.
  *
  * http://gototech.com/tagtacular
@@ -30,6 +30,8 @@
 		var mode = 'edit';
 		var rememberTag = '';
 		var flashCount = 0;
+		var currentFailureMessage = '';
+		var currentSuccessMessage = '';
 
 		///////////////////////
 		/// Core Functions ///
@@ -58,20 +60,30 @@
 			} else {
 				result && settings.flashFailure(result);
 			}
-			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
+			focusOnInput();
 		}
 
-	 	var drawEditTray = function(focus) {
+	 	var drawEditTray = function(focus, initialText) {
 	 		if (mode == 'edit') {
-	 			drawEditTrayForEditMode(focus);
+	 			drawEditTrayForEditMode(focus, initialText);
 	 		} else if (mode == 'view') {
 	 			drawEditTrayForViewMode();
-	 		}	 		
+	 		}
+
+	 		if (currentSuccessMessage.length > 0) {
+	 			settings.flashSuccess(currentSuccessMessage);
+	 		}
+	 		if (currentFailureMessage.length > 0) {
+	 			settings.flashFailure(currentFailureMessage);
+	 		}
+
 	 		settings.postDrawEditTray(mode);
 	 	}
 
-		var drawEditTrayForEditMode = function(focus) {
-			var html = '<input class="tagtacular_add_input" value="'+rememberTag+'" />';
+		var drawEditTrayForEditMode = function(focus, initialText) {
+			initialText = rememberTag || initialText || '';
+
+			var html = '<input class="tagtacular_add_input" value="'+initialText+'" />';
 			if (settings.configShowAddButton) {
 				html += settings.getAddButtonHtml(settings);
 			}
@@ -134,7 +146,7 @@
 			}
 
 			if (focus) {
-				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
+				focusOnInput();
 			}
 		}
 
@@ -212,6 +224,12 @@
 			return tagInList(tag, entityTags);
 		}
 
+		var focusOnInput = function() {
+			var input = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input');
+			var value = input.val();
+			input.focus().val('').val(value);
+		}
+
 		var getAutocompleteTags = function() {
 			if (settings.configAutocompletePrune) {
 				return getRemainingTags();
@@ -244,9 +262,9 @@
 			});
 			settings.commitRemoveTag(tag, settings.entityId, settings);
 	 		drawTagList();
-	 		drawEditTray(true);
+	 		drawEditTray(true, toplevel.find('.tagtacular_add_input').val());
 			settings.messageRemoveTagSuccess && settings.flashSuccess(settings.messageRemoveTagSuccess, 'removeTag', tag);	 		
-			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').focus();
+			focusOnInput();
 	 	}
 
 	 	var sortList = function(list) {
@@ -293,6 +311,9 @@
 		}
 
 		var defaultFlashFailure = function(message) {
+			currentFailureMessage = message;
+			currentSuccessMessage = '';
+
 			var flash = toplevel.find('.tagtacular_flash');
 			flash.html(message);
 			flash.addClass('tagtacular_failure');
@@ -306,6 +327,7 @@
 				setTimeout(function() {
 					if (flashCount == expected) {
 						var flash = toplevel.find('.tagtacular_flash');
+						currentFailureMessage = '';
 						flash.fadeOut();
 					}
 				}, 1000 * settings.configFlashFailureHideAfter);
@@ -313,6 +335,9 @@
 		}
 
 		var defaultFlashSuccess = function(message) {
+			currentSuccessMessage = message;
+			currentFailureMessage = '';
+
 			var flash = toplevel.find('.tagtacular_flash')
 			flash.html(message);
 			flash.addClass('tagtacular_success');
@@ -326,6 +351,7 @@
 				setTimeout(function() {
 					if (flashCount == expected) {
 						var flash = toplevel.find('.tagtacular_flash');
+						currentSuccessMessage = '';
 						flash.fadeOut();
 					}
 				}, 1000 * settings.configFlashSuccessHideAfter);
