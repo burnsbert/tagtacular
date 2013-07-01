@@ -1,0 +1,29 @@
+{
+    "name": "tagtacular",
+    "title": "Tagtacular",
+    "description": "jQuery plugin for managing tags related to an entity",
+    "keywords": [
+        "tag",
+        "tags"
+    ],
+    "version": "0.7.2",
+    "author": {
+        "name": "Eric Burns",
+        "email": "eburns200@gototech.com",
+        "url": "http://gototech.com"
+    },
+    "licenses": [
+        {
+            "type": "Mozilla Public License, Version 2.0",
+            "url": "http://www.mozilla.org/MPL/2.0/"
+        }
+    ],
+    "bugs": "https://github.com/burnsbert/tagtacular/issues",
+    "homepage": "http://gototech.com/tagtacular",
+    "demo": "http://gototech.com/tagtacular",
+    "docs": "https://github.com/burnsbert/tagtacular/wiki",
+    "dependencies": {
+        "jquery": ">=1.6.2",
+        "jquery-ui": ">=1.8.16"
+    }
+}
