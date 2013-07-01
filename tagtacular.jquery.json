@@ -1,12 +1,14 @@
 {
     "name": "tagtacular",
     "title": "Tagtacular",
-    "description": "jQuery plugin for managing tags related to an entity",
+    "description": "Tagtacular is a plugin for managing tags related to an entity. These are tags like the tags you might attach to a Tumblr or WordPress post, to user stories or bugs in project management software like Target Process, or any number of other use cases. Tagtacular is easy to setup and has many flexible configuration options. The documentation and example code is extensive and kept up to date. Check out the demo page.",
     "keywords": [
         "tag",
-        "tags"
+        "tags",
+        "tag-manager",
+        "tags-manager"
     ],
-    "version": "0.7.2",
+    "version": "0.7.3",
     "author": {
         "name": "Eric Burns",
         "email": "eburns200@gototech.com",
