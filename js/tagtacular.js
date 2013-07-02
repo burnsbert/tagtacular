@@ -481,7 +481,8 @@
 			}
 
 			mode = settings.mode;
-
+			settings.toplevel = toplevel;
+			
 			drawLayout();
 			return toplevel;
 		}
