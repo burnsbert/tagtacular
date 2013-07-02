@@ -368,7 +368,7 @@
 			return '<button class="tagtacular_add_button">'+settings.configAddButtonText+'</button>';;
 		}
 
-		var defaultGetLayoutHtml = function() {
+		var defaultGetLayoutHtml = function(settings) {
 			return '<div class="tagtacular_tag_tray"></div><div class="tagtacular_edit_tray"></div>';
 		}
 

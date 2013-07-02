@@ -152,9 +152,31 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 </pre>
 </div>
 </div>
+<h3>Example 6: Edit Bar On Top</h3>
+<p>
+Overriding the layout html for a non-standard configuration. Also, we're giving the buttons some custom text.
+</p>
+<div class="tagtacular_basic orange" id="tagtacular_6"></div>
+<div class="codebox">
+<pre>
+	var tags6 = $('#tagtacular_6').tagtacular({
+		entityId: 102,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
+		getLayoutHtml: function(settings) {
+			return '&lt;div class="tagtacular_edit_tray"&gt;&lt;/div&gt;&lt;div class="tagtacular_tag_tray"&gt;&lt;/div&gt;';
+		},
+		configAddButtonText: 'Boom! Add it.',
+		configSwitchButtonTextInEdit: 'No more change!',
+		configSwitchButtonTextInView: 'It\'s time for a change!',
+	})
+</pre>
+</div>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/tagtacular.js?donotcache=20130631"></script>
+<!-- <script type="text/javascript" src="js/tagtacular.min.js"></script> -->
+<script type="text/javascript" src="js/tagtacular.min.js?donotcache=20130701"></script>
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		entityId: 101,
@@ -231,6 +253,18 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 		},
 		configFormatTagNamesOnInit: true
 	});
+
+	var tags6 = $('#tagtacular_6').tagtacular({
+		entityId: 102,
+		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
+		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
+		getLayoutHtml: function(settings) {
+			return '<div class="tagtacular_edit_tray"></div><div class="tagtacular_tag_tray"></div>';
+		},
+		configAddButtonText: 'Boom! Add it.',
+		configSwitchButtonTextInEdit: 'No more change!',
+		configSwitchButtonTextInView: 'It\'s time for a change!'
+	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular
 	// tags1.addTag('Detroit');

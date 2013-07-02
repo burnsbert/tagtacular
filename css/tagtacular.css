@@ -173,3 +173,24 @@ div.tagtacular_basic.yellow .tagtacular_tag a span.tagtacular_value {
 div.tagtacular_basic.yellow .tagtacular_tag a:hover span.tagtacular_value {
 	color: red;
 }
+
+/* Basic Style Orange */
+
+div.tagtacular_basic.orange .tagtacular_tag {
+	background-color: #ff9C10;
+	color: #401500;
+	border: 1px solid #552500;
+}
+
+div.tagtacular_basic.orange .tagtacular_tag a span.tagtacular_value {
+	background-color: #ff9C10;
+	color: #401500;
+}
+
+div.tagtacular_basic.orange .tagtacular_tag a:hover span.tagtacular_value {
+	color: #006400;
+}
+
+div.tagtacular_basic.orange a.tagtacular_delete:hover{
+	color: #006400;
+}

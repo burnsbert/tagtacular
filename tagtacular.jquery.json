@@ -1,12 +1,13 @@
 {
     "name": "tagtacular",
     "title": "Tagtacular",
-    "description": "Tagtacular is a tag manager plugin for displaying, adding, and removing tags related to an entity. These are tags like the tags you might attach to a Tumblr or WordPress post, for example, or any number of other use cases. Tagtacular is easy to setup and get started with. It also has many flexible configuration options to make tag management work exactly the way you envision for your site. The documentation and example code are extensive and kept current with every change. Check out the demo page.",
+    "description": "Tagtacular is a tag manager plugin for displaying, adding, and removing tags related to an entity. These are tags like the tags you might input for a Tumblr or WordPress post, for example, or any number of other use cases. Tagtacular is easy to setup and get started with. It also has many flexible configuration options to make tag management work exactly the way you envision for your site. The documentation and example code are extensive and kept current with every change. Check out the demo page.",
     "keywords": [
         "tag",
-        "tags"
+        "tags",
+        "input"
     ],
-    "version": "0.7.4",
+    "version": "0.7.5",
     "author": {
         "name": "Eric Burns",
         "email": "eburns200@gototech.com",
