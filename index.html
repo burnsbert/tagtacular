@@ -7,7 +7,7 @@
 <meta name="author" content="Eric Burns" />
 <meta name="description" content="Tagtacular is an open source jQuery plugin for managing tags." />
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="css/tagtacular.css?donotcache=20130701" rel="stylesheet" type="text/css" />
+<link href="css/tagtacular.css?donotcache=20130703" rel="stylesheet" type="text/css" />
 <meta property="og:image" content="http://gototech.com/tagtacular/images/tags.png"/>
 <meta property="og:title" content="Tag Management with tagtacular.js"/>
 <meta property="og:url" content="http://gototech.com/tagtacular"/>
@@ -28,7 +28,8 @@ Tagtacular is an open source jQuery plugin by Eric Burns for managing tags. It i
 <li>minimal requirements and minimal assumptions about your technology stack and architecture</li>
 </ul>
 
-<a href="https://github.com/burnsbert/tagtacular">Download from GitHub</a><br />
+<a href="https://github.com/burnsbert/tagtacular">Tagtacular on GitHub</a><br />
+<a href="http://github.com/burnsbert/tagtacular/zipball/0.8.0">Download Tagtacular</a><br />
 <a href="https://github.com/burnsbert/tagtacular/wiki">Complete Documentation</a><br />
 
 <h2>Examples and Demo</h2>
@@ -154,21 +155,39 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 </div>
 <h3>Example 6: Edit Bar On Top</h3>
 <p>
-Overriding the layout html for a non-standard configuration. Also, we're giving the buttons some custom text.
+Moving the edit tray to before the tag tray with the configEditTrayFirst setting. More layout customization would have been possible with the getLayoutHtml callback setting. Also, we're giving the buttons some custom text. We're also disabling add tag on switch mode.
 </p>
 <div class="tagtacular_basic orange" id="tagtacular_6"></div>
 <div class="codebox">
 <pre>
 	var tags6 = $('#tagtacular_6').tagtacular({
-		entityId: 102,
+		entityId: 106,
 		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
-		getLayoutHtml: function(settings) {
-			return '&lt;div class="tagtacular_edit_tray"&gt;&lt;/div&gt;&lt;div class="tagtacular_tag_tray"&gt;&lt;/div&gt;';
-		},
+		configEditTrayFirst: true,
 		configAddButtonText: 'Boom! Add it.',
 		configSwitchButtonTextInEdit: 'No more change!',
 		configSwitchButtonTextInView: 'It\'s time for a change!',
+		configAddOnSwitch: false
+	})
+</pre>
+</div>
+<h3>Example 7: Limit to Existing Tags, Use a Select Box</h3>
+<p>
+Let's use a select box! Also, disable edit/view mode switching by setting configShowSwitchButton to false.
+</p>
+<div class="tagtacular_basic" id="tagtacular_7"></div>
+<div class="codebox">
+<pre>
+	var tags7 = $('#tagtacular_7').tagtacular({
+		entityId: 107,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
+		configEditTrayFirst: true,
+		configSelectBox: true,
+		configShowSwitchButton: false
 	})
 </pre>
 </div>
@@ -176,7 +195,7 @@ Overriding the layout html for a non-standard configuration. Also, we're giving 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <!-- <script type="text/javascript" src="js/tagtacular.min.js"></script> -->
-<script type="text/javascript" src="js/tagtacular.js?donotcache=20130701"></script>
+<script type="text/javascript" src="js/tagtacular.js?donotcache=20130703"></script>
 <script type="text/javascript">
 	var tags1 = $('#tagtacular_1').tagtacular({
 		entityId: 101,
@@ -255,15 +274,25 @@ Overriding the layout html for a non-standard configuration. Also, we're giving 
 	});
 
 	var tags6 = $('#tagtacular_6').tagtacular({
-		entityId: 102,
+		entityId: 106,
 		entityTags: ['Boston', 'Chicago', 'New York City', 'Atlanta'],
 		systemTags: ['Austin', 'Dallas', 'Raleigh', 'Richmond', 'Augusta', 'Portland', 'Durham', 'Memphis', 'Nashville', 'Seattle', 'Toronto'],
-		getLayoutHtml: function(settings) {
-			return '<div class="tagtacular_edit_tray"></div><div class="tagtacular_tag_tray"></div>';
-		},
+		configEditTrayFirst: true,
 		configAddButtonText: 'Boom! Add it.',
 		configSwitchButtonTextInEdit: 'No more change!',
-		configSwitchButtonTextInView: 'It\'s time for a change!'
+		configSwitchButtonTextInView: 'It\'s time for a change!',
+		configAddOnSwitch: false
+	})
+
+	var tags7 = $('#tagtacular_7').tagtacular({
+		entityId: 107,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
+		configEditTrayFirst: true,
+		configSelectBox: true,
+		configShowSwitchButton: false
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular

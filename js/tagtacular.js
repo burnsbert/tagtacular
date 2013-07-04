@@ -1,6 +1,6 @@
 /* ===================================================
- * tagtacular.js v0.7.5
- * A jQuery library for tags management.
+ * tagtacular.js v0.8.0
+ * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
  * Docs: https://github.com/burnsbert/tagtacular/wiki
@@ -21,6 +21,8 @@
  * =================================================== */
 
 ;(function($){
+
+	"use strict";
 
 	$.fn.tagtacular = function(options) {
 
@@ -85,7 +87,19 @@
 			initialText =  initialText || rememberTag || '';
 
 			// Draw the DOM Elements
-			var html = '<input class="tagtacular_add_input" value="'+initialText+'" />';
+
+			if (!settings.configSelectBox) {
+				var html = '<input class="tagtacular_add_input" value="'+initialText+'" />';
+			} else {
+				var html = '<select class="tagtacular_add_input">';
+				var selectTags = getAutocompleteTags();
+				html += '<option value=""></option>';
+				$.each(selectTags, function(index, value) {
+					html += '<option value="'+value+'">'+value+'</option>';
+				});
+				html += '</select>';
+			}
+
 			if (settings.configShowAddButton) {
 				html += settings.getAddButtonHtml(settings);
 			}
@@ -101,7 +115,11 @@
 			if (settings.configShowAddButton) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function() {
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
-					addTag(tagText);
+					if (settings.configSelectBox && tagText.length < 1) {
+						settings.messageEmptySelectBoxFailure && settings.flashFailure(settings.messageEmptySelectBoxFailure);
+					} else {
+						addTag(tagText);
+					}
 				});
 			}
 
@@ -141,7 +159,7 @@
 			});
 
 			// Autocomplete Bindings
-			if (settings.configAutocomplete) {
+			if (!settings.configSelectBox && settings.configAutocomplete) {
 				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
 					source: getAutocompleteTags(),
 					select: function(e, ui) {
@@ -182,7 +200,7 @@
 			if (!settings.configAllowedToEdit) {
 				mode = 'view';
 			}
-			toplevel.html(settings.getLayoutHtml());
+			toplevel.html(settings.getLayoutHtml(settings));
 			drawTagList();
 			drawEditTray(false);
 		}
@@ -369,7 +387,11 @@
 		}
 
 		var defaultGetLayoutHtml = function(settings) {
-			return '<div class="tagtacular_tag_tray"></div><div class="tagtacular_edit_tray"></div>';
+			if (settings.configEditTrayFirst) {
+				return '<div class="tagtacular_edit_tray"></div><div class="tagtacular_tag_tray"></div>';
+			} else {
+				return '<div class="tagtacular_tag_tray"></div><div class="tagtacular_edit_tray"></div>';
+			}
 		}
 
 		var defaultGetSwitchButtonHtml = function(mode, settings) {
@@ -421,12 +443,14 @@
 			configDeleteSymbol:            'X',
 			configDeleteLastOnEmptyKeys:   [],
 			configDelimiters:              [13,44],
+			configEditTrayFirst:           false,
 			configFlashFailureHideAfter:   5,
 			configFlashSuccessHideAfter:   5,
 			configFormatTagNamesOnInit:    false,
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
 			configRenderFlashMessageSpan:  true,
+			configSelectBox:               false,
 			configShowAddButton:           true,
 			configShowSwitchButton:        true,
 			configSortTags:                true,
@@ -444,6 +468,7 @@
 			formatTagName:                 doNothing,
 			messageAddTagSuccess:          'tag added',
 			messageAddTagAlreadyExists:    'tag is already assigned',
+			messageEmptySelectBoxFailure:  'you must select a tag before adding it',
 			messageRemoveTagSuccess:       'tag removed',
 			messageTagNameInvalid:         'invalid tag name: tag names can only include letters, numbers, underscores, hyphens, and spaces',
 			messageTagTooLong:             'tag name too long, maximum length of [configMaximumTagLength]',

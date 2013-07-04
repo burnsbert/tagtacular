@@ -28,6 +28,10 @@ div.tagtacular_textlike .tagtacular_edit_tray input {
 	padding: 4px 4px 4px 4px;	
 }
 
+div.tagtacular_textlike .tagtacular_edit_tray select {
+	min-width: 150px;
+}
+
 div.tagtacular_textlike a.tagtacular_delete{
 	font-family: "Arial", Arial, Verdana;
 	text-decoration: none;
@@ -57,6 +61,11 @@ div.tagtacular_basic .tagtacular_edit_tray {
 
 div.tagtacular_basic .tagtacular_edit_tray input {
 	margin-right: 8px;
+}
+
+div.tagtacular_basic .tagtacular_edit_tray select {
+	margin-right: 8px;
+	min-width: 150px;
 }
 
 div.tagtacular_basic .tagtacular_tag_tray {
