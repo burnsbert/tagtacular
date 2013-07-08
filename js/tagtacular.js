@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.8.1
+ * tagtacular.js v0.8.3
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -113,7 +113,8 @@
 
 			// Add Button Bindings
 			if (settings.configShowAddButton) {
-				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function() {
+				toplevel.find('.tagtacular_edit_tray .tagtacular_add_button').bind('click', function(e) {
+					e.preventDefault();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 					if (settings.configSelectBox && tagText.length < 1) {
 						settings.messageEmptySelectBoxFailure && settings.flashFailure(settings.messageEmptySelectBoxFailure);
@@ -125,7 +126,8 @@
 
 			// Switch Button Bindings
 			if (settings.configShowSwitchButton) {
-				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function() {
+				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function(e) {
+					e.preventDefault();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
 					if (settings.configAddOnSwitch && tagText.length >= 1) {
 						addTag(tagText);
@@ -186,7 +188,8 @@
 			toplevel.find('.tagtacular_edit_tray').html(html);
 
 			if (settings.configShowSwitchButton && settings.configAllowedToEdit) {
-				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function() {
+				toplevel.find('.tagtacular_edit_tray .tagtacular_switch_button').bind('click', function(e) {
+					e.preventDefault();
 					mode = 'edit';
 					drawTagList();
 					drawEditTray(true);
@@ -401,9 +404,9 @@
 
 		var defaultGetTagHtml = function(tag, mode, settings) {
 			if (mode=='edit') {
-				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span>&nbsp;<a class="tagtacular_delete" href="#">'+settings.configDeleteSymbol+'</a><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
+				return '<span class="tagtacular_tag tagtacular_tag_edit"><span class="tagtacular_value">'+tag+'</span>&nbsp;<a class="tagtacular_delete" href="#">'+settings.configDeleteSymbol+'</a><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			} else if (mode=='view') {
-				return '<span class="tagtacular_tag"><span class="tagtacular_value">'+tag+'</span><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
+				return '<span class="tagtacular_tag tagtacular_tag_view"><span class="tagtacular_value">'+tag+'</span><span class="tagtacular_delim">'+settings.configTagSeparator+'</span></span>';
 			}
 		}
 
