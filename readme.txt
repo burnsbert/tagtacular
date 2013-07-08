@@ -1,5 +1,5 @@
 ===================================================
-tagtacular.js v0.8.0
+tagtacular.js v0.8.1
 A jQuery plugin for tags management.
 
 http://gototech.com/tagtacular
@@ -20,13 +20,15 @@ limitations under the License.
 See online documentation for complete instructions. Requires jquery.js and jqueryui.js.
 ===================================================
 
-tagtacular.js is an open source tag management jQuery plugin released under the Mozilla Public License, Version 2.0. The goals of this project are:
+tagtacular.js is an open source tag management jQuery plugin released under the Mozilla Public License, Version 2.0. This is a very business-friendly open source license similar to the MIT license. 
 
-1. very easy to setup with default behavior
-2. very flexible customization options
-3. minimal requirements and minimal assumptions about your technology stack and architecture
+The goals of this project are that a tags management jQuery plugin should:
+1. be very easy to setup with default behavior
+2. have very flexible customization options
+3. have minimal requirements and assumptions beyond jQuery and jQueryUI
 
 For more information:
+---------------------
 Home Page: http://gototech.com/tagtacular
 Download: https://github.com/burnsbert/tagtacular
 Documentation: https://github.com/burnsbert/tagtacular/wiki

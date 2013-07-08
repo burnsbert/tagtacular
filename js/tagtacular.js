@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.8.0
+ * tagtacular.js v0.8.1
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -89,7 +89,7 @@
 			// Draw the DOM Elements
 
 			if (!settings.configSelectBox) {
-				var html = '<input class="tagtacular_add_input" value="'+initialText+'" />';
+				var html = '<input type="text" class="tagtacular_add_input" value="'+initialText+'" />';
 			} else {
 				var html = '<select class="tagtacular_add_input">';
 				var selectTags = getAutocompleteTags();
@@ -458,6 +458,7 @@
 			configSwitchButtonTextInView:  'Edit',
 			configTagSeparator:            '',
 			entityId:                      null,
+			entityType:                    null,
 			entityTags:                    [],
 			getAddButtonHtml:              defaultGetAddButtonHtml, 
 			getLayoutHtml:                 defaultGetLayoutHtml,
@@ -517,6 +518,9 @@
 		$.extend(toplevel, {'flashSuccess': settings.flashSuccess});
 		$.extend(toplevel, {'getEntityId': function() {
 			return settings.entityId;
+		}});
+		$.extend(toplevel, {'getEntityType': function() {
+			return settings.entityType;
 		}});
 		$.extend(toplevel, {'getEntityTags': function() { 
 			return entityTags; 
