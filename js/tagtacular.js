@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.8.5
+ * tagtacular.js v0.8.6
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -292,6 +292,16 @@
 			return state;
 		}
 
+		var removeDuplicates = function(list) {
+			var result = [];
+			$.each(list, function(index, val) {
+				if ($.inArray(val, result) == -1) {
+					result.push(val);
+				}
+			});
+			return result;
+		}
+
 		var removeTag = function(tag) {
 			entityTags = $.grep(entityTags, function(value) {
 				if (settings.configCaseInsensitive) {
@@ -512,7 +522,9 @@
 			settings.messageTagTooShort = settings.messageTagTooShort.replace('[configMinimumTagLength]', settings.configMinimumTagLength);
 
 			entityTags = sortList(settings.entityTags);
-			allTags = settings.sort($.unique(settings.systemTags.concat(entityTags)));
+
+			allTags = settings.systemTags.concat(entityTags);
+			allTags = settings.sort(removeDuplicates(allTags));
 
 			if (settings.configFormatTagNamesOnInit) {
 				entityTags = $.map(entityTags, function(value, index) {
