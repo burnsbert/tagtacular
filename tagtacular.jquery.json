@@ -5,9 +5,10 @@
     "keywords": [
         "tag",
         "tags",
-        "input"
+        "input",
+        "keyword"
     ],
-    "version": "0.8.3",
+    "version": "0.8.4",
     "author": {
         "name": "Eric Burns",
         "email": "eburns200@gototech.com",

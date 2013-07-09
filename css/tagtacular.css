@@ -23,7 +23,7 @@ div.tagtacular_textlike .tagtacular_tag_tray {
 	font-size: 1.1em;
 }
 
-div.tagtacular_textlike .tagtacular_edit_tray input {
+div.tagtacular_textlike .tagtacular_edit_tray input[type="text"] {
 	margin: 2px 2px 2px 2px;
 	padding: 4px 4px 4px 4px;	
 }
@@ -59,8 +59,9 @@ div.tagtacular_basic .tagtacular_edit_tray {
 	padding: 4px 4px 4px 4px;
 }
 
-div.tagtacular_basic .tagtacular_edit_tray input {
+div.tagtacular_basic .tagtacular_edit_tray input[type="text"] {
 	margin-right: 8px;
+	padding: 4px 4px 4px 4px;
 }
 
 div.tagtacular_basic .tagtacular_edit_tray select {

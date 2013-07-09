@@ -33,7 +33,7 @@ The goals of this project are that a tags management jQuery plugin should:
 </ul>
 
 <a href="https://github.com/burnsbert/tagtacular">Tagtacular on GitHub</a><br />
-<a href="http://github.com/burnsbert/tagtacular/zipball/0.8.3">Download Tagtacular</a><br />
+<a href="http://github.com/burnsbert/tagtacular/zipball/0.8.4">Download Tagtacular 0.8.4</a><br />
 <a href="https://github.com/burnsbert/tagtacular/wiki">Complete Documentation</a><br />
 
 <h2>Examples and Demo</h2>
@@ -159,7 +159,7 @@ Using getTagHtml setting to define custom tag html. Here we make each tag a link
 </div>
 <h3>Example 6: Edit Bar On Top</h3>
 <p>
-Moving the edit tray to before the tag tray with the configEditTrayFirst setting. More layout customization would have been possible with the getLayoutHtml callback setting. Also, we're giving the buttons some custom text. We're also disabling add tag on switch mode.
+Moving the edit tray to before the tag tray with the configEditTrayFirst setting. More layout customization would have been possible with the getLayoutHtml callback setting. Also, we're giving the buttons some custom text. We're also disabling add tag on switch mode and setting some placeholder text.
 </p>
 <div class="tagtacular_basic orange" id="tagtacular_6"></div>
 <div class="codebox">
@@ -172,6 +172,7 @@ Moving the edit tray to before the tag tray with the configEditTrayFirst setting
 		configAddButtonText: 'Boom! Add it.',
 		configSwitchButtonTextInEdit: 'No more change!',
 		configSwitchButtonTextInView: 'It\'s time for a change!',
+		configPlaceholderText: 'Wanna add a tag?',
 		configAddOnSwitch: false
 	})
 </pre>
@@ -285,6 +286,7 @@ Let's use a select box! Also, disable edit/view mode switching by setting config
 		configAddButtonText: 'Boom! Add it.',
 		configSwitchButtonTextInEdit: 'No more change!',
 		configSwitchButtonTextInView: 'It\'s time for a change!',
+		configPlaceholderText: 'Wanna add a tag?',
 		configAddOnSwitch: false
 	})
 
