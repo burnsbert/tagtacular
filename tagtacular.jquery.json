@@ -8,7 +8,7 @@
         "input",
         "keyword"
     ],
-    "version": "0.8.4",
+    "version": "0.8.6",
     "author": {
         "name": "Eric Burns",
         "email": "eburns200@gototech.com",
@@ -16,8 +16,8 @@
     },
     "licenses": [
         {
-            "type": "Mozilla Public License, Version 2.0",
-            "url": "http://www.mozilla.org/MPL/2.0/"
+            "type": "MIT",
+            "url": "https://github.com/burnsbert/tagtacular/blob/master/license.txt"
         }
     ],
     "bugs": "https://github.com/burnsbert/tagtacular/issues",
