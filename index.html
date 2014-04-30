@@ -7,13 +7,15 @@
 <meta name="keywords" content="tagtacular.js, Tagtacular, tag management, tags, jQuery plugin, open source, jQuery, javascript" />
 <meta name="author" content="Eric Burns" />
 <meta name="description" content="Tagtacular is an open source jQuery plugin for managing tags." />
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/redmond/jquery-ui.css" type="text/css" media="all" />
-<link href="css/tagtacular.css?donotcache=20130703" rel="stylesheet" type="text/css" />
 <meta property="og:image" content="http://gototech.com/tagtacular/images/tags.png"/>
 <meta property="og:title" content="Tag Management with tagtacular.js"/>
 <meta property="og:url" content="http://gototech.com/tagtacular"/>
 <meta property="og:site_name" content="tagtacular.js Tags Management"/>
 <link href="data:image/x-icon;base64,AAABAAEAEBAQAAAAAAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAABpOwkAnm45AAAAAAD/hAAAGhIGANSmdAD69/8A//v3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIiIREiERIiIiIiICICIiIiIiAAAAACIiIiIGVlZQIiIhEgVlZWAhEiIQAFZWAAEiIRIgZWUCIRIiIiBWVgIiIiIgAAAAAAIiIiB3d3d3AiIiEHQ3dDcBIiIgcRdxFwIiIiB3d3d3AiIiIAAAAAACIiIiICIiAiIiIiIREiERIiLxjwAA/b8AAPAPAADwDwAAkAkAAMADAACYGQAA+B8AAOAHAADgBwAAwAMAAOAHAADgBwAA4AcAAPvfAADxjwAA" rel="icon" type="image/x-icon" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<link href="css/tagtacular.css?donotcache=20130703" rel="stylesheet" type="text/css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 </head>
 <body>
 <div class="top">
@@ -35,7 +37,7 @@ The goals of this project are that a tags management jQuery plugin should:
 </ul>
 
 <a href="https://github.com/burnsbert/tagtacular">Tagtacular on GitHub</a><br />
-<a href="http://github.com/burnsbert/tagtacular/zipball/0.8.6">Download Tagtacular 0.8.6</a><br />
+<a href="http://github.com/burnsbert/tagtacular/zipball/0.8.7">Download Tagtacular 0.8.7</a><br />
 <a href="https://github.com/burnsbert/tagtacular/wiki">Complete Documentation</a><br />
 
 <h2>Examples and Demo</h2>
@@ -198,9 +200,25 @@ Let's use a select box! Also, disable edit/view mode switching by setting config
 	})
 </pre>
 </div>
+<h3>Example 8: Limit to Existing Tags, but still use and autocomplete</h3>
+<p>
+Let's use a select box! Also, disable edit/view mode switching by setting configShowSwitchButton to false.
+</p>
+<div class="tagtacular_basic" id="tagtacular_8"></div>
+<div class="codebox">
+<pre>
+	var tags8 = $('#tagtacular_8').tagtacular({
+		entityId: 108,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
+		configEditTrayFirst: true,
+		configLimitToExisting: true
+	})
+</pre>
+</div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <!-- <script type="text/javascript" src="js/tagtacular.min.js"></script> -->
 <script type="text/javascript" src="js/tagtacular.js?donotcache=20130703"></script>
 <script type="text/javascript">
@@ -301,6 +319,16 @@ Let's use a select box! Also, disable edit/view mode switching by setting config
 		configEditTrayFirst: true,
 		configSelectBox: true,
 		configShowSwitchButton: false
+	})
+
+	var tags8 = $('#tagtacular_8').tagtacular({
+		entityId: 108,
+		entityTags: ['Alpha', 'Beta', 'Epsilon'],
+		systemTags: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta', 'Theta', 'Iota', 'Kappa', 
+		             'Lambda', 'Mu', 'Nu', 'Xi', 'Omicron', 'Pi', 'Rho', 'Sigma', 'Tau', 'Upsilon', 'Phi',
+		             'Chi', 'Psi', 'Omega'],
+		configEditTrayFirst: true,
+		configLimitToExisting: true
 	})
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular

@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v0.8.6
+ * tagtacular.js v0.8.7
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -9,7 +9,7 @@
  *
  * The MIT License (MIT)
  * 
- * Copyright (c) 2013 Eric Burns
+ * Copyright (c) 2014 Eric Burns
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -167,8 +167,22 @@
 					e.preventDefault();
 					e.stopPropagation();
 					var tagText = toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val();
-					if (tagText.length > 0) {
+					if (tagText.length > 0 && !inUnreadyState()) {
 						addTag(tagText);
+					}
+				}
+			});
+
+			toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').bind('keyup', function(e) {
+				if (inUnreadyState()) {
+					toplevel.find('.tagtacular_add_button').attr('disabled', 'disabled');
+					if (settings.configAddOnSwitch) {
+						toplevel.find('.tagtacular_switch_button').attr('disabled', 'disabled');
+					}
+				} else {
+					toplevel.find('.tagtacular_add_button').removeAttr('disabled');
+					if (settings.configAddOnSwitch) {
+						toplevel.find('.tagtacular_switch_button').removeAttr('disabled');
 					}
 				}
 			});
@@ -292,6 +306,24 @@
 			return state;
 		}
 
+		var inUnreadyState = function() {
+			if (!settings.configLimitToExisting) {
+				return false;
+			}
+
+			var editInput = toplevel.find('.tagtacular_add_input');
+			if (editInput.length < 1) {
+				return false;
+			}
+
+			var current = editInput.val();
+			if (current.length == 0) {
+				return false;
+			}
+
+			return !systemHasTag(current);
+		}
+
 		var removeDuplicates = function(list) {
 			var result = [];
 			$.each(list, function(index, val) {
@@ -325,7 +357,7 @@
 	 	}
 
 		var systemHasTag = function(tag) {
-			return tagInList(tag, systemTags);
+			return tagInList(tag, allTags);
 		}
 
 		var tagInList = function(tag, list) {
@@ -473,6 +505,7 @@
 			configFlashFailureHideAfter:   5,
 			configFlashSuccessHideAfter:   5,
 			configFormatTagNamesOnInit:    false,
+			configLimitToExisting:         false,
 			configMinimumTagLength:        1,
 			configMaximumTagLength:        32,
 			configPlaceholderText:         false,
