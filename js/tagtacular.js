@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v1.0.0
+ * tagtacular.js v1.0.1
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -9,7 +9,7 @@
  *
  * The MIT License (MIT)
  * 
- * Copyright (c) 2014 Eric Burns
+ * Copyright (c) 2015 Eric Burns
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -342,6 +342,7 @@
 					return value != tag;
 				}
 			});
+			settings.entityTags = entityTags;
 			settings.commitRemoveTag(tag, settings.entityId, settings);
 	 		drawTagList();
 	 		drawEditTray(true, toplevel.find('.tagtacular_add_input').val());
