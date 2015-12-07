@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v1.0.1
+ * tagtacular.js v1.1.0
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -46,6 +46,8 @@
 		var flashCount = 0;
 		var currentFailureMessage = '';
 		var currentSuccessMessage = '';
+		var remoteDataSource = null;
+		var currentTextMatchesSelection = false;
 
 		///////////////////////
 		/// Core Functions ///
@@ -57,7 +59,7 @@
 			if (result === true) {
 				if (!entityHasTag(tag)) {
 					entityTags.push(tag);
-					if (!tagInList(tag, allTags)) {
+					if (!tagInList(tag, allTags) && !remoteDataSource) {
 						allTags.push(tag);
 						allTags = settings.sort(allTags);
 					}
@@ -189,13 +191,34 @@
 
 			// Autocomplete Bindings
 			if (!settings.configSelectBox && settings.configAutocomplete) {
-				toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
-					source: getAutocompleteTags(),
-					select: function(e, ui) {
-						toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val('');
-						addTag(ui.item.value);
-					}
-				});
+				if (!!remoteDataSource) {
+					toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
+						source: settings.remoteDataSource,
+						select: function(e, ui) {
+							toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val('');
+							addTag(ui.item.value);
+							currentTextMatchesSelection = false;
+						},
+						response: function(e, ui) {
+							currentTextMatchesSelection = false;
+							for (var i = (ui.content.length - 1); i >= 0; i--) {
+								if (tagInList(ui.content[i].value, entityTags)) {
+									ui.content.splice(i, 1);
+								} else if (ui.content[i].value.toLowerCase() == toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val().toLowerCase()) {
+									currentTextMatchesSelection = true;
+								}
+							}
+						}
+					});
+				} else {
+					toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').autocomplete({
+						source: getAutocompleteTags(),
+						select: function(e, ui) {
+							toplevel.find('.tagtacular_edit_tray .tagtacular_add_input').val('');
+							addTag(ui.item.value);
+						}
+					});
+				}
 			}
 
 			if (focus) {
@@ -300,7 +323,7 @@
 		var getState = function() {
 			var state = $.extend({}, settings);
 			state.entityTags = entityTags;
-			state.systemTags = allTags;
+			state.systemTags = remoteDataSource ? allTags : null;
 			state.mode = mode;
 			state.toplevel = toplevel;
 			return state;
@@ -321,7 +344,12 @@
 				return false;
 			}
 
-			return !systemHasTag(current);
+			if (!!remoteDataSource) {
+				/* todo: remoteDataSource does not currently support having buttons and limiting tags to matching selections, implement */
+				return true;
+			} else {
+				return !systemHasTag(current);
+			}
 		}
 
 		var removeDuplicates = function(list) {
@@ -358,7 +386,11 @@
 	 	}
 
 		var systemHasTag = function(tag) {
-			return tagInList(tag, allTags);
+			if (remoteDataSource) {
+				return true;
+			} else {
+				tagInList(tag, allTags);
+			}
 		}
 
 		var tagInList = function(tag, list) {
@@ -539,6 +571,7 @@
 			postDrawEditTray:              doNothing,
 			postDrawTagList:               doNothing,
 			postSwitchLayout:              doNothing,
+			remoteDataSource:              null,
 			sort:                          caseInsensitiveSort,
 			systemTags:                    [],
 			validate:                      defaultValidate,
@@ -557,16 +590,22 @@
 
 			entityTags = sortList(settings.entityTags);
 
-			allTags = settings.systemTags.concat(entityTags);
-			allTags = settings.sort(removeDuplicates(allTags));
+			remoteDataSource = settings.remoteDataSource;
+
+			if (!remoteDataSource) {
+				allTags = settings.systemTags.concat(entityTags);
+				allTags = settings.sort(removeDuplicates(allTags));
+			}
 
 			if (settings.configFormatTagNamesOnInit) {
 				entityTags = $.map(entityTags, function(value, index) {
 					return settings.formatTagName(value);
 				});
-				allTags = $.map(allTags, function(value, index) {
-					return settings.formatTagName(value);
-				});
+				if (!remoteDataSource) {
+					allTags = $.map(allTags, function(value, index) {
+						return settings.formatTagName(value);
+					});
+				}
 			}
 
 			mode = settings.mode;
@@ -591,7 +630,7 @@
 		$.extend(toplevel, {'getRemainingTags': getRemainingTags});
 		$.extend(toplevel, {'getState': getState});
 		$.extend(toplevel, {'getSystemTags': function() { 
-			return allTags; 
+			return !remoteDataSource ? allTags : []; 
 		}});
 		$.extend(toplevel, {'removeTag': removeTag});
 		$.extend(toplevel, {'tagtacular': tagtacular});

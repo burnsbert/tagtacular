@@ -1,5 +1,5 @@
 ===================================================
-tagtacular.js v1.0.1
+tagtacular.js v1.1.0
 A jQuery plugin for tags management.
 
 http://gototech.com/tagtacular

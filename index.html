@@ -178,7 +178,7 @@ Moving the edit tray to before the tag tray with the configEditTrayFirst setting
 		configSwitchButtonTextInView: 'It\'s time for a change!',
 		configPlaceholderText: 'Wanna add a tag?',
 		configAddOnSwitch: false
-	})
+	});
 </pre>
 </div>
 <h3>Example 7: Limit to Existing Tags, Use a Select Box</h3>
@@ -197,14 +197,14 @@ Let's use a select box! Also, disable edit/view mode switching by setting config
 		configEditTrayFirst: true,
 		configSelectBox: true,
 		configShowSwitchButton: false
-	})
+	});
 </pre>
 </div>
 <h3>Example 8: Limit to Existing Tags, but still use an autocomplete</h3>
 <p>
 An autocomplete that limits you to existing tags.
 </p>
-<div class="tagtacular_basic" id="tagtacular_8"></div>
+<div class="tagtacular_basic yellow" id="tagtacular_8"></div>
 <div class="codebox">
 <pre>
 	var tags8 = $('#tagtacular_8').tagtacular({
@@ -215,7 +215,39 @@ An autocomplete that limits you to existing tags.
 		             'Chi', 'Psi', 'Omega'],
 		configEditTrayFirst: true,
 		configLimitToExisting: true
-	})
+	});
+</pre>
+</div>
+
+<h3>Example 9: Use an API as the data source</h3>
+<p>
+An autocomplete that limits you to existing tags. remoteDataSource is a callback compatible with jQueryUI Autocompleter's source callbacks.
+</p>
+<div class="tagtacular_basic orange" id="tagtacular_9"></div>
+<div class="codebox">
+<pre>
+	var tags9 = $('#tagtacular_9').tagtacular({
+		entityId: 109,
+		entityTags: ['Canada', 'France', 'Japan'],
+		remoteDataSource: function(request, response) {
+			var url = 'https://restcountries.eu/rest/v1/name/' + encodeURIComponent(request.term);
+
+			$.get(url, function(data){
+				processed = $(data).map(function() { return this.name; });
+
+				// restcountries.eu matches alternate spellings by default (which are alternate names in some cases). 
+				// We're throwing out those matches in order to not confuse the user.
+				processed = processed.filter(function(i, value) {
+					return value.toLowerCase().indexOf(request.term.toLowerCase()) >= 0;
+				});
+				response(processed);
+			});
+		},
+		configEditTrayFirst: true,
+		configLimitToExisting: true,
+		configShowAddButton: false,
+		configShowSwitchButton: false
+	});
 </pre>
 </div>
 
@@ -319,7 +351,7 @@ An autocomplete that limits you to existing tags.
 		configEditTrayFirst: true,
 		configSelectBox: true,
 		configShowSwitchButton: false
-	})
+	});
 
 	var tags8 = $('#tagtacular_8').tagtacular({
 		entityId: 108,
@@ -329,7 +361,30 @@ An autocomplete that limits you to existing tags.
 		             'Chi', 'Psi', 'Omega'],
 		configEditTrayFirst: true,
 		configLimitToExisting: true
-	})
+	});
+
+	var tags9 = $('#tagtacular_9').tagtacular({
+		entityId: 109,
+		entityTags: ['Canada', 'France', 'Japan'],
+		remoteDataSource: function(request, response) {
+			var url = 'https://restcountries.eu/rest/v1/name/' + encodeURIComponent(request.term);
+
+			$.get(url, function(data){
+				processed = $(data).map(function() { return this.name; });
+
+				// restcountries.eu matches alternate spellings by default (which are alternate names in some cases). 
+				// We're throwing out those matches in order to not confuse the user.
+				processed = processed.filter(function(i, value) {
+					return value.toLowerCase().indexOf(request.term.toLowerCase()) >= 0;
+				});
+				response(processed);
+			});
+		},
+		configEditTrayFirst: true,
+		configLimitToExisting: true,
+		configShowAddButton: false,
+		configShowSwitchButton: false
+	});
 
 	// Here's how to use the hooks to manipulate an instance of tagtacular
 	// tags1.addTag('Detroit');
