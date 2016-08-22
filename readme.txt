@@ -1,5 +1,5 @@
 ===================================================
-tagtacular.js v1.1.0
+tagtacular.js v1.1.1
 A jQuery plugin for tags management.
 
 http://gototech.com/tagtacular
@@ -9,7 +9,7 @@ This software is released under the MIT License.
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Eric Burns
+Copyright (c) 2016 Eric Burns
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

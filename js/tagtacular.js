@@ -1,5 +1,5 @@
 /* ===================================================
- * tagtacular.js v1.1.0
+ * tagtacular.js v1.1.1
  * A jQuery plugin for tags management.
  *
  * http://gototech.com/tagtacular
@@ -9,7 +9,7 @@
  *
  * The MIT License (MIT)
  * 
- * Copyright (c) 2015 Eric Burns
+ * Copyright (c) 2016 Eric Burns
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -353,10 +353,11 @@
 		}
 
 		var removeDuplicates = function(list) {
-			var result = [];
+			var result = [], last = false;
 			$.each(list, function(index, val) {
-				if ($.inArray(val, result) == -1) {
+				if (last != val) {
 					result.push(val);
+					last = val;
 				}
 			});
 			return result;
@@ -594,7 +595,7 @@
 
 			if (!remoteDataSource) {
 				allTags = settings.systemTags.concat(entityTags);
-				allTags = settings.sort(removeDuplicates(allTags));
+				allTags = removeDuplicates(settings.sort(allTags));
 			}
 
 			if (settings.configFormatTagNamesOnInit) {
